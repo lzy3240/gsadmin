@@ -1,0 +1,87 @@
+package boot
+
+import (
+	"context"
+	"fmt"
+	"gsadmin/core/config"
+	"gsadmin/core/db"
+	"gsadmin/core/log"
+	"gsadmin/core/queue"
+	"gsadmin/core/utils/assertion"
+	"gsadmin/core/utils/validate"
+	"gsadmin/database"
+	"gsadmin/global/e"
+	"gsadmin/middleware"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func InitServer() { //staticFs, templateFs embed.FS
+	if err := validate.InitTrans("zh"); err != nil {
+		fmt.Println("init trans failed, err:", err)
+	}
+
+	config.InitConfig("./config.toml")
+	log.InitLog()
+	db.InitConn()
+	database.InitTables()
+	registerQueue()
+
+	r := initRouter() //staticFs, templateFs
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%d", config.Instance().App.HttpPort),
+		Handler:        r,
+		ReadTimeout:    30 * time.Second,
+		WriteTimeout:   30 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	usage()
+	go func() {
+		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Instance().Error(err.Error())
+			os.Exit(0)
+		}
+	}()
+
+	shutDown(s)
+}
+
+func usage() {
+	usageStr := fmt.Sprintf(`	欢迎使用 %s@%s
+	程序运行地址:http://127.0.0.1:%s...`, config.Instance().App.Name, config.Instance().App.Version, assertion.AnyToString(config.Instance().App.HttpPort))
+	log.Instance().Info("Start server, running at: http://127.0.0.1:" + assertion.AnyToString(config.Instance().App.HttpPort))
+	fmt.Printf("%s\n", usageStr)
+}
+
+func shutDown(s *http.Server) {
+	quit := make(chan os.Signal)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	log.Instance().Info("Server exiting.")
+	fmt.Println("Shutdown Server ...")
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	err := db.Instance().Close()
+	if err != nil {
+		log.Instance().Fatal("Close DB error: " + err.Error())
+	}
+
+	if err = s.Shutdown(ctx); err != nil {
+		log.Instance().Fatal("Shutdown server error: " + err.Error())
+	}
+	fmt.Println("Server exited.")
+}
+
+func registerQueue() {
+	//注册日志队列
+	_ = queue.Instance().RegisterTopic(e.TopicOperLog)
+	go queue.Instance().Subscribe(e.TopicOperLog, middleware.WriteTo)
+	//注册业务队列
+	//TODO
+}

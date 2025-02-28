@@ -1,0 +1,173 @@
+/** Buttom 默认*/
+.gsadmin-btn {
+	display: inline-block;
+	line-height: 38px;
+	white-space: nowrap;
+	cursor: pointer;
+	text-align: center;
+	box-sizing: border-box;
+	outline: none;
+	transition: 0.1s;
+	font-weight: 500;
+	padding: 0 18px;
+	height: 38px;
+	font-size: 14px;
+	background-color: white;
+	border: 1px solid #dcdfe6;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+}
+
+.gsadmin-btn i {
+	font-size: 13px;
+}
+
+.gsadmin-btn:hover {
+	opacity: .8;
+	filter: alpha(opacity=80);
+	color: #409eff;
+	border-color: #c6e2ff;
+	background-color: #ECF5FF;
+}
+
+.gsadmin-btn-danger,
+.gsadmin-btn-warming,
+.gsadmin-btn-success,
+.gsadmin-btn-primary {
+	color: #fff !important
+}
+/** Button 主题 */
+.gsadmin-btn-primary {
+	background-color: #2D8CF0 !important;
+	border: #2D8CF0;
+}
+.gsadmin-btn-danger {
+	background-color: #f56c6c !important;
+	border: #f56c6c;
+}
+.gsadmin-btn-warming {
+	background-color: #f6ad55 !important;
+	border: #f6ad55;
+}
+.gsadmin-btn-success {
+	background-color: #5FB878 !important;
+	border: #5FB878;
+}
+
+.gsadmin-btn[round] {
+	border-radius: 50px;
+}
+
+.gsadmin-btn-primary[plain] {
+	color: #409eff !important;
+	background: #ecf5ff 10% !important;
+	border-color: #b3d8ff !important;
+}
+
+.gsadmin-btn-primary[plain]:hover {
+	color: #fff !important;
+	background-color: #2d8cf0!important
+}
+
+.gsadmin-btn-success[plain] {
+	color: #67c23a !important;
+	background: #f0f9eb !important;
+	border-color: #c2e7b0 !important;
+}
+
+.gsadmin-btn-success[plain]:hover {
+	color: white !important;
+	background-color: #67c23a !important
+}
+
+.gsadmin-btn-warming[plain] {
+	color: #e6a23c !important;
+	background: #fdf6ec !important;
+	border-color: #f5dab1 !important;
+}
+
+.gsadmin-btn-warming[plain]:hover {
+	color: white !important;
+	background-color: #e6a23c !important
+}
+
+.gsadmin-btn-danger[plain] {
+	color: #f56c6c !important;
+	background: #fef0f0 !important;
+	border-color: #fbc4c4 !important;
+}
+
+.gsadmin-btn-danger[plain]:hover {
+	color: white !important;
+	background-color: #f56c6c !important
+}
+
+/** Button Group */
+.gsadmin-btn-group {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.gsadmin-btn-group .gsadmin-btn {
+	float: left;
+	position: relative;
+	border-radius: 0px;
+	margin-left: 1px;
+	margin-right: 1px;
+}
+
+.gsadmin-btn-md {
+	height: 34px;
+	line-height: 34px;
+	padding: 0 10px;
+	font-size: 12.5px;
+}
+
+.gsadmin-btn-group .gsadmin-btn:first-child {
+	border-top-left-radius: 4px !important;
+	border-bottom-left-radius: 4px !important;
+}
+
+.gsadmin-btn-group .gsadmin-btn:last-child {
+	border-top-right-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
+}
+
+.gsadmin-btn-group .gsadmin-btn[round]:first-child {
+	border-top-left-radius: 50px !important;
+	border-bottom-left-radius: 50px !important;
+}
+
+.gsadmin-btn-group .gsadmin-btn[round]:last-child {
+	border-top-right-radius: 50px !important;
+	border-bottom-right-radius: 50px !important;
+}
+
+/** Button Size*/
+.gsadmin-btn-sm {
+	height: 32px;
+	line-height: 32px;
+	padding: 0 10px;
+	font-size: 12px;
+}
+
+.gsadmin-btn-xs {
+	height: 28px;
+	line-height: 28px;
+	padding: 0 8px;
+	font-size: 12px;
+}
+
+.gsadmin-btn-md {
+	height: 34px;
+	line-height: 34px;
+	padding: 0 10px;
+	font-size: 12.5px;
+}
+
+.gsadmin-btn-lg {
+	height: 44px;
+	line-height: 44px;
+	padding: 0 25px;
+	font-size: 16px;
+}

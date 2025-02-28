@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+</head>
+
+<body class="gsadmin-container">
+<!--<div class="layui-card">-->
+<!--    <div class="layui-card-body">-->
+<!--        <form class="layui-form" action="">-->
+<!--            <div class="layui-form-item">-->
+<!--                <div class="layui-form-item layui-inline">-->
+<!--                    <label class="layui-form-label">字典名称</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="dict_name" placeholder="" class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="layui-form-item layui-inline">-->
+<!--                    <label class="layui-form-label">字典类型</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="dict_type" placeholder="" class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="layui-form-item layui-inline">-->
+<!--                    <label class="layui-form-label">状态</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <select name ="status" class="selDict" dict="sys_normal_disable"></select>-->
+<!--                        <div class="layui-form-select">-->
+<!--                            <div class="layui-select-tips">-->
+<!--                                <input type="text" placeholder="请选择" value="" class="layui-input">-->
+<!--                                <i class="layui-edge"></i>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="layui-form-item layui-inline">-->
+<!--                    <button class="gsadmin-btn gsadmin-btn-md gsadmin-btn-primary" lay-submit lay-filter="dict-type-query">-->
+<!--                        <i class="layui-icon layui-icon-search"></i>-->
+<!--                        查询-->
+<!--                    </button>-->
+<!--                    <button type="reset" class="gsadmin-btn gsadmin-btn-md">-->
+<!--                        <i class="layui-icon layui-icon-refresh"></i>-->
+<!--                        重置-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <input type="hidden" id="type" value="{{ .data_type }}">
+        <table id="dict-data-table" lay-filter="dict-data-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="dict-data-toolbar">
+    <button class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<script type="text/html" id="dict-data-bar">
+    <button class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+    <button class="gsadmin-btn gsadmin-btn-danger gsadmin-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+</script>
+
+<script src="/static/component/layui/layui.js"></script>
+<script src="/static/component/gsadmin/gsadmin.js"></script>
+<script>
+    layui.use(['table', 'form', 'jquery', 'common'], function() {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let common = layui.common;
+        // let dict = layui.dict;
+        // dict.renderDictAll();
+        //
+        // form.render('select');
+        // let MODULE_PATH = "operate/";
+        // checkToken();
+
+        var dict_type = document.getElementById("type").value
+
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+        });
+        table.render({
+            elem: '#dict-data-table',
+            url: '/system/dict/data/json?dict_type='+dict_type,
+            page: true,
+            cols: [
+                [{
+                    type: 'checkbox'
+                }, {
+                    title: 'ID',
+                    field: 'id',
+                    align: 'center',
+                    width: 100
+                }, {
+                    title: '字典标签',
+                    field: 'dict_label',
+                    align: 'center',
+                    width: 200
+                }, {
+                    title: '字典值',
+                    field: 'dict_value',
+                    align: 'center',
+                    width: 200
+                }, {
+                    title: '字典排序',
+                    field: 'dict_sort',
+                    align: 'center'
+                }, {
+                    title: '创建时间',
+                    field: 'created_at',
+                    align: 'center',
+                    templet:function(res){
+                        return layui.util.toDateString(res.created_at,  "yyyy-MM-dd HH:mm:ss")
+                    }
+                }, {
+                    title: '状态',
+                    field: 'status',
+                    align: 'center',
+                    templet: function(res) {
+                        if (res.status == 1) {
+                            return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="dict-data-enable" checked = "true">'
+                        } else {
+                            return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="dict-data-enable" checked = "false">'
+                        }
+                    }
+                }, {
+                    title: '操作',
+                    toolbar: '#dict-data-bar',
+                    align: 'center',
+                    width: 130
+                }]
+            ],
+            skin: 'line',
+            toolbar: '#dict-data-toolbar',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        table.on('tool(dict-data-table)', function(obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            } else if (obj.event === 'view') {
+                window.view(obj);
+            }
+        });
+
+        table.on('toolbar(dict-data-table)', function(obj) {
+            if (obj.event === 'add') {
+                window.add(obj);
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        form.on('submit(dict-data-query)', function(data) {
+            table.reload('dict-data-table', {
+                where: data.field
+            })
+            return false;
+        });
+
+        // 启用-禁用开关
+        form.on('switch(dict-data-enable)', function(obj) {
+            var status = 0;
+            if(obj.elem.checked){
+                status = 1
+            }
+            $.ajax({
+                url: "/system/dict/data/status",
+                type: "POST",
+                data: {id:this.value,status:status},
+                dataType:'json',
+                success: function(result) {
+                    if (result.code == 200) {
+                        layer.msg(result.msg, {
+                            icon: 1,
+                            time: 1000
+                        });
+                    } else {
+                        layer.msg(result.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }
+                },
+            });
+        });
+
+        // window.view = function (obj){
+        //     layer.open({
+        //         type: 2,
+        //         title: '字典数据',
+        //         shade: 0.1,
+        //         maxmin: true,
+        //         shadeClose: true,
+        //         area: ['100%' , '100%'],
+        //         content: '/system/dict/data/list/?dict_type=' + obj.data.dict_type
+        //     });
+        // }
+
+        window.add = function() {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: [common.isModile() ? '100%' : '500px', common.isModile() ? '100%' : '400px'],
+                content: '/system/dict/data/add/?dict_type=' + dict_type
+            });
+        }
+
+        window.edit = function(obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: '/system/dict/data/edit/?id=' + obj.data.id
+            });
+        }
+
+        window.remove = function(obj) {
+            layer.confirm('确定要删除该用户', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: "/system/dict/data/delete?id=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'post',
+                    success: function(result) {
+                        layer.close(loading);
+                        if (result.code == 200) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function() {
+                                obj.del();
+                            });
+                        } else {
+                            layer.close(loading);
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function(param) {
+            table.reload('dict-data-table');
+        }
+    })
+</script>
+</body>
+
+</html>

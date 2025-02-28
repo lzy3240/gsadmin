@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+</head>
+<body>
+<form class="layui-form" action="" id="dict_data_edit">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <input type="hidden" name="id" value="{{.dictData.ID}}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dict_type" value="{{.dictData.DictType}}" lay-verify="title" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dict_label" value="{{.dictData.DictLabel}}" lay-verify="title" autocomplete="off" placeholder="请输入字典标签" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典值</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dict_value" value="{{.dictData.DictValue}}" lay-verify="required" autocomplete="off" placeholder="请输入字典值" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典排序</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dict_sort" value="{{.dictData.DictSort}}" lay-verify="number" autocomplete="off" placeholder="请输入字典排序" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典说明</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="remark" value="{{.dictData.Remark}}" lay-verify="title" autocomplete="off" placeholder="请输入字典说明" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" {{if eq .dictData.Status 1}}checked{{end}} name="status" lay-skin="switch">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-sm" lay-submit="" lay-filter="dict-data-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="gsadmin-btn gsadmin-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="/static/component/layui/layui.js"></script>
+<script src="/static/component/gsadmin/gsadmin.js"></script>
+<script>
+    layui.use(['form','jquery'],function(){
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        form.on('submit(dict-data-save)', function(data){
+            $.ajax({
+                url:'/system/dict/data/edit',
+                data: $('#dict_data_edit').serialize(),
+                dataType:'json',
+                type:'post',
+                success:function(result){
+                    if(result.code == 200){
+                        layer.msg(result.msg,{icon:1,time:1000},function(){
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dict-data-table");
+                        });
+                    }else{
+                        layer.msg(result.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

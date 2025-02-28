@@ -1,0 +1,42 @@
+.gsadmin-notice .layui-this {
+	color: #5FB878 !important;
+	font-weight: 500;
+}
+
+.gsadmin-notice li {
+	border-right: 1px solid whitesmoke;
+}
+
+.gsadmin-notice * {
+	color: dimgray !important;
+}
+
+.gsadmin-notice{
+	width: 285px!important;
+}
+
+.gsadmin-notice span{
+	margin-left: 20px;
+	font-size: 13px;
+}
+
+.gsadmin-notice img{
+	margin-left: 8px;
+	width: 33px!important;
+	height: 33px!important;
+	border-radius: 50px;
+}
+
+.gsadmin-notice-item{
+	height: 45px!important;
+	line-height: 45px!important;
+}
+
+/** 滚动条样式 */
+.gsadmin-notice *::-webkit-scrollbar{width:0px;height:0px;}
+.gsadmin-notice *::-webkit-scrollbar-track{background: white;border-radius:2px;}
+.gsadmin-notice *::-webkit-scrollbar-thumb{background: #E6E6E6;border-radius:2px;}
+.gsadmin-notice *::-webkit-scrollbar-thumb:hover{background: #E6E6E6;}
+.gsadmin-notice *::-webkit-scrollbar-corner{background: #f6f6f6;}
+
+

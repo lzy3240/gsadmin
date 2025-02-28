@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+    <link rel="stylesheet" href="/static/admin/css/other/person.css" />
+    <style>
+        .main-container .layui-form-item{
+            margin-top: 5px!important;
+            margin-bottom: 5px!important;
+        }
+        .button-container {left: 15px;}
+    </style>
+</head>
+<body>
+<form class="layui-form" id="site_config" onsubmit="return false">
+    <div class="mainBox" style="background-color: whitesmoke">
+        <div class="main-container">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-tab layui-tab-brief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">站点配置</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show" style="padding-top: 30px;padding-bottom: 50px;">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">网站标题</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="web_name" value="{{.site.WebName}}" placeholder="请输入网站标题" class="layui-input">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">网站地址</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="web_url" value="{{.site.WebUrl}}" placeholder="网站URL,很多地方会用到，请务必填写" class="layui-input">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">站点关键词</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="key_words" value="{{.site.KeyWords}}" placeholder="请输入站点关键词" class="layui-input">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">版权信息</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="copyright" value="{{.site.Copyright}}" placeholder="请输入版权信息" class="layui-input">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">备案信息</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="icp" value="{{.site.Icp}}" placeholder="请输入备案信息" class="layui-input">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">站点描述</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="description" placeholder="请输入站点描述" class="layui-textarea">{{.site.Description}}</textarea>
+                                    </div>
+                                </div>
+                                <br/>
+                                <input type="hidden" name="id" value="{{.id}}">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">站点开关</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="site_status" value="1" lay-skin="switch" lay-text="开启|关闭" {{if eq .site.SiteStatus 1}}checked=""{{end}}>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-sm" lay-submit="" lay-filter="user-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="gsadmin-btn gsadmin-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+
+<script src="/static/component/layui/layui.js"></script>
+<script src="/static/component/gsadmin/gsadmin.js"></script>
+<script>
+    layui.use(['element','form','popup','jquery'],function(){
+        let form = layui.form;
+        let popup = layui.popup;
+        let $ = layui.jquery;
+
+        form.on('submit(user-save)', function (data) {
+            $.ajax({
+                url: '/system/site/edit',
+                data: $('#site_config').serialize(),
+                type:"post",
+                dataType:'json',
+                success: function (result) {
+                    if (result.code == 200) {
+                        popup.success(result.msg, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        popup.failure(result.msg);
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

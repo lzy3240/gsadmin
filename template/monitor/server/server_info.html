@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>服务监控</title>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+    <meta name="referrer" content="no-referrer"/>
+    <style>
+        .monitor-span-title{
+            width:180px;
+            display:inline-block;
+            padding-left: 20px;
+        }
+        .monitor-span-footer{
+            display:inline-block;
+        }
+        .monitor-span-other{
+            width: 10%;
+            display:inline-block;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body class="gsadmin-container">
+<div class="layui-row layui-col-space10">
+<div class="layui-col-md6">
+    <div class="layui-card">
+        <div class="layui-card-header">系统</div>
+        <div class="layui-card-body">
+            <ul class="list">
+                <li  class="list-item"><span class="monitor-span-title" > 属性 </span><span class="monitor-span-footer"> 值 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 主机名称 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.HostName }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 内核版本 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.Kernel }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 系统平台 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.Platform }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 系统序列 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.Family }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 系统版本 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.Version }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 开机时间 </span><span class="monitor-span-footer"> {{ .server_info.SysInfo.StartTime }} </span></li>
+                <hr>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-md6">
+    <div class="layui-card">
+        <div class="layui-card-header">CPU</div>
+        <div class="layui-card-body">
+            <ul class="list">
+                <li  class="list-item"><span class="monitor-span-title" > 属性 </span><span class="monitor-span-footer"> 值 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 型号 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.ModelName }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 编码 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.PhysicalId }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 频率 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.Speed }} Mhz </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 物理内核 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.PhysicalCore }} 核心 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 虚拟内核 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.LogicalCore }} 核心 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 使用率 </span><span class="monitor-span-footer"> {{ .server_info.CpuInfo.UsedPercent }} % </span></li>
+                <hr>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-md6">
+    <div class="layui-card">
+        <div class="layui-card-header">应用</div>
+        <div class="layui-card-body">
+            <ul class="list">
+                <li  class="list-item"><span class="monitor-span-title" > 属性 </span><span class="monitor-span-footer"> 值 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 应用版本 </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.SdkVersion }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 应用JDK </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.AppVersion }} </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 应用路径 </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.Path }} </span></li>
+                <hr>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-md6">
+    <div class="layui-card">
+        <div class="layui-card-header">内存</div>
+        <div class="layui-card-body">
+            <ul class="list">
+                <li  class="list-item"><span class="monitor-span-title" > 属性 </span><span class="monitor-span-footer"> 值 </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 总内存 </span><span class="monitor-span-footer"> {{ .server_info.MemInfo.TotalMem }} G </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 可用内存 </span><span class="monitor-span-footer"> {{ .server_info.MemInfo.AvailableMem }} G </span></li>
+                <hr>
+                <li  class="list-item"><span class="monitor-span-title" > 使用率 </span><span class="monitor-span-footer"> {{ .server_info.MemInfo.UsedPercent }} % </span></li>
+                <hr>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-md12">
+    <div class="layui-card">
+        <div class="layui-card-header">磁盘</div>
+        <div class="layui-card-body">
+            <ul class="list">
+                <li  class="list-item">
+                    <span class="monitor-span-other" > 路径 </span>
+                    <span class="monitor-span-other" > 磁盘空间 </span>
+                    <span class="monitor-span-other" > 剩余空间 </span>
+                    <span class="monitor-span-other" > 已用空间 </span>
+                    <span class="monitor-span-other" > 使用率 </span>
+                    <span class="monitor-span-other" style="width: 15%"> 读字节 </span>
+                    <span class="monitor-span-other" style="width: 15%"> 写字节 </span>
+                </li>
+                <hr>
+                {{range $k,$v := .server_info.DiskInfo}}
+                    <li  class="list-item">
+                        <span class="monitor-span-other" > {{ $v.Path }} </span>
+                        <span class="monitor-span-other" > {{ $v.TotalCap }} </span>
+                        <span class="monitor-span-other" > {{ $v.FreeCap }} </span>
+                        <span class="monitor-span-other" > {{ $v.UsedCap }} </span>
+                        <span class="monitor-span-other" > {{ $v.UsedPercent }} </span>
+                        <span class="monitor-span-other" style="width: 15%"> {{ $v.ReadBytes }} </span>
+                        <span class="monitor-span-other" style="width: 15%"> {{ $v.WriteBytes }} </span>
+                    </li>
+                    <hr>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

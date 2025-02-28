@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>消息详情</title>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+</head>
+<body>
+<form class="layui-form" action="" id="notice_edit">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <input type="hidden" name="id" value="{{ .notice.ID }}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">来自于</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly class="layui-input" value=" {{ .notice.NoticeFrom }} ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">消息标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly class="layui-input" value=" {{ .notice.NoticeTitle }} ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">消息类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly class="layui-input" value=" {{ .notice.NoticeType }} ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">消息内容</label>
+                    <div class="layui-input-block">
+                        <textarea readonly class="layui-textarea" > {{ .notice.NoticeContext }} </textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">消息时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly class="layui-input" value=" {{ .notice.CreatedAt }} ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="status" readonly class="layui-input" {{ if eq .notice.Status 1 }} style="color: green" value="已读" {{ else }} style="color: red" value="未读" {{ end }}>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-sm" lay-submit="" lay-filter="notice-status">
+                <i class="layui-icon layui-icon-ok"></i>
+                确定
+            </button>
+        </div>
+    </div>
+</form>
+<script src="/static/component/layui/layui.js"></script>
+<script src="/static/component/gsadmin/gsadmin.js"></script>
+<script>
+    layui.use(['form','jquery'],function(){
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        form.on('submit(notice-status)', function(data){
+            if (data.field.status == '未读') {
+                $.ajax({
+                    url:'/system/notice/status',
+                    data: $('#notice_edit').serialize(),
+                    dataType:'json',
+                    type:'POST',
+                    success:function(result){
+                        if(result.code == 200){
+                            layer.msg(result.msg,{icon:1,time:1000},function(){
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("notice-table");
+                                top.layui.admin.messageRender(); //更新小信封
+                                top.layui.admin.message();
+                            });
+                        }else{
+                            layer.msg(result.msg,{icon:2,time:1000});
+                        }
+                    }
+                })
+            } else {
+                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+            }
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

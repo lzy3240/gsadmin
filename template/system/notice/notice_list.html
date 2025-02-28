@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>消息中心</title>
+    <link rel="stylesheet" href="/static/component/gsadmin/css/gsadmin.css" />
+</head>
+
+<body class="gsadmin-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">消息标题</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="notice_title" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">消息类型</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="notice_type" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <select name ="status" class="selDict" dict="sys_notice_read"></select>
+                        <div class="layui-form-select">
+                            <div class="layui-select-tips">
+                                <input type="text" placeholder="请选择" value="" class="layui-input">
+                                <i class="layui-edge"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <button class="gsadmin-btn gsadmin-btn-md gsadmin-btn-primary" lay-submit lay-filter="notice-query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="gsadmin-btn gsadmin-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="notice-table" lay-filter="notice-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="notice-toolbar">
+    <button class="gsadmin-btn gsadmin-btn-primary gsadmin-btn-md" lay-event="batchRead">
+        <i class="layui-icon layui-icon-ok-circle"></i>
+        批量已读
+    </button>
+</script>
+
+<script type="text/html" id="notice-bar">
+    <button class="gsadmin-btn gsadmin-btn-success gsadmin-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-tips"></i></button>
+</script>
+
+<script src="/static/component/layui/layui.js"></script>
+<script src="/static/component/gsadmin/gsadmin.js"></script>
+<script>
+    layui.use(['table', 'form', 'jquery', 'common', 'dict'], function() {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let common = layui.common;
+        let dict = layui.dict;
+        dict.renderDictAll();
+
+        form.render('select');
+        
+        // let MODULE_PATH = "operate/";
+        // checkToken();
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+        });
+        table.render({
+            elem: '#notice-table',
+            url: '/system/notice/json',
+            page: true,
+            cols: [
+                [{
+                    type: 'checkbox'
+                }, {
+                    title: 'ID',
+                    field: 'id',
+                    align: 'center',
+                    width: 100
+                }, {
+                    title: '消息标题',
+                    field: 'notice_title',
+                    align: 'center',
+                    width: 300
+                }, {
+                    title: '消息类型',
+                    field: 'notice_type',
+                    align: 'center'
+                }, {
+                    title: '创建时间',
+                    field: 'created_at',
+                    align: 'center',
+                    templet:function(res){
+                        return layui.util.toDateString(res.created_at,  "yyyy-MM-dd HH:mm:ss")
+                    }
+                }, {
+                    title: '状态',
+                    field: 'status',
+                    align: 'center',
+                    templet: function(res) {
+                        if (res.status == 1) {
+                            return '<span style="color: green">已读</span>';
+                        } else {
+                            return '<span style="color: red">未读</span>';
+                        }
+                    }
+                }, {
+                    title: '操作',
+                    toolbar: '#notice-bar',
+                    align: 'center',
+                    width: 130
+                }]
+            ],
+            skin: 'line',
+            toolbar: '#notice-toolbar',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        table.on('tool(notice-table)', function(obj) {
+            if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('toolbar(notice-table)', function(obj) {
+            if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRead') {
+                window.batchRead(obj);
+            }
+        });
+
+        form.on('submit(notice-query)', function(data) {
+            table.reload('notice-table', {
+                where: data.field
+            })
+            return false;
+        });
+
+        window.edit = function(obj) {
+            layer.open({
+                type: 2,
+                title: '详情',
+                shade: 0.1,
+                area: ['600px', '500px'],
+                content: '/system/notice/edit/?id=' + obj.data.id
+            });
+        }
+
+        window.batchRead = function(obj) {
+            var checkIds = common.checkField(obj, 'id');
+
+            if (checkIds === "") {
+                layer.msg("未选中数据", {
+                    icon: 3,
+                    time: 1000
+                });
+                return false;
+            }
+
+            layer.confirm('确定要设置为已读', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: '/system/notice/batchRead',
+                    data: {ids: checkIds},
+                    dataType: 'json',
+                    type: 'post',
+                    success: function(result) {
+                        layer.close(loading);
+                        if (result.code == 200) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function() {
+                                table.reload('notice-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function(param) {
+            table.reload('notice-table');
+        }
+    })
+</script>
+</body>
+
+</html>
