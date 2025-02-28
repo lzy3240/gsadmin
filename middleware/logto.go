@@ -53,6 +53,16 @@ func LogTo() func(c *gin.Context) {
 			return
 		}
 
+		// 处理返回结果
+		outBody, _ := c.Get("result")
+		respBody := outBody.(*baseapi.CommonResp)
+		respData := assertion.AnyToString(respBody.Data)
+
+		// Tag为否不记录
+		if !respBody.Tag {
+			return
+		}
+
 		//获取用户信息
 		tmp := session.Get(c, e.UserInfo)
 
@@ -61,11 +71,6 @@ func LogTo() func(c *gin.Context) {
 		if s, ok := tmp.(string); ok {
 			_ = json.Unmarshal([]byte(s), &user)
 		}
-
-		// 处理返回结果
-		outBody, _ := c.Get("result")
-		respBody := outBody.(*baseapi.CommonResp)
-		respData := assertion.AnyToString(respBody.Data)
 
 		var status = 0
 		if respBody.Code == 200 || respBody.Code == 302 || respBody.Code == 0 {
@@ -79,8 +84,9 @@ func LogTo() func(c *gin.Context) {
 
 		var operIp = ip.GetClientIp(c.Request)
 
+		// 暂不写完,仅写255
 		if len(respData) > 256 {
-			respData = respData[0:255] //暂不写完,仅写255
+			respData = respData[0:255]
 		}
 
 		var operLog = model.SysOperLog{

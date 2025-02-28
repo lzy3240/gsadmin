@@ -12,6 +12,7 @@ type CommonResp struct {
 	Msg   string      `json:"msg"`   //消息内容
 	Data  interface{} `json:"data"`  //数据内容
 	Count int         `json:"count"` //数据数量
+	Tag   bool        `json:"tag"`   //日志标记
 	Type  int         `json:"type"`  //业务类型
 	Title string      `json:"title"` //操作名称
 }
@@ -91,6 +92,7 @@ func (a *Api) SetCount(count int) *Api {
 
 // SetLogTag 设置日志标识信息
 func (a *Api) SetLogTag(buType int, opTitle string) *Api {
+	a.r.Tag = true
 	a.r.Type = buType
 	a.r.Title = opTitle
 	return a
