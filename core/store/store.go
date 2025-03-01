@@ -23,7 +23,10 @@ func Instance() StoreClient {
 				storeClient = newMinioClient()
 			case "oss":
 				storeClient = newOssClient()
+			case "local":
+				storeClient = newLocalClient()
 			default:
+				storeClient = newLocalClient()
 			}
 		})
 	}

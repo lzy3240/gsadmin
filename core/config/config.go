@@ -27,16 +27,16 @@ type Conf struct {
 }
 
 type AppConf struct {
-	Name        string
-	Version     string
-	HttpPort    int
-	RunMode     string
-	CacheMode   string
-	QueueMode   string
-	PageSize    int
-	JwtSecret   string
-	ImgSavePath string
-	ImgUrlPath  string
+	Name         string
+	Version      string
+	HttpPort     int
+	RunMode      string
+	CacheMode    string
+	QueueMode    string
+	PageSize     int
+	JwtSecret    string
+	FileSavePath string
+	FileViewPath string
 }
 
 type DBConf struct {

@@ -22,10 +22,9 @@ func initRouter() *gin.Engine { // staticFs, templateFs embed.FS
 	r.Static("/static", "./static")
 
 	//其他文件
-	r.Static(config.Instance().App.ImgUrlPath, config.Instance().App.ImgSavePath)
-	r.Static("/runtime/file", "runtime/file")
-	r.StaticFile("/favicon.ico", "./static/favicon.ico") //单独文件
-	r.StaticFile("/robots.txt", "./static/robots.txt")   //单独文件
+	r.Static(config.Instance().App.FileViewPath, config.Instance().App.FileSavePath) //上传文件
+	r.StaticFile("/favicon.ico", "./static/favicon.ico")                             //单独文件
+	r.StaticFile("/robots.txt", "./static/robots.txt")                               //单独文件
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())

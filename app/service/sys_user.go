@@ -250,7 +250,7 @@ func (s *SysUser) UpdateProfile(req *dto.ProfileForm, operUser *model.SysUser) e
 }
 
 //func GetImgSavePath(path string) string {
-//	return strings.ReplaceAll(path, config.Instance().App.ImgUrlPath, config.Instance().App.ImgSavePath)
+//	return strings.ReplaceAll(path, config.Instance().App.FileViewPath, config.Instance().App.FileSavePath)
 //}
 
 func (s *SysUser) GetLoginInfo(operUser *model.SysUser) ([]model.SysLoginLog, error) {

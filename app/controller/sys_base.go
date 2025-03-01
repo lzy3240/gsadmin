@@ -9,12 +9,12 @@ import (
 	"gsadmin/app/service/dto"
 	"gsadmin/core/baseapi"
 	"gsadmin/core/config"
+	"gsadmin/core/store"
 	"gsadmin/core/utils/assertion"
 	"gsadmin/core/utils/captcha"
 	f "gsadmin/core/utils/file"
 	"gsadmin/core/utils/ip"
 	"gsadmin/core/utils/str"
-	"gsadmin/core/utils/sysos"
 	"gsadmin/global/e"
 	"html/template"
 	"io/ioutil"
@@ -64,23 +64,29 @@ func (a SysBase) Upload(c *gin.Context) {
 		a.ErrorResp().SetMsg("文件大小超限").SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
+	//处理文件
 	day := time.Now().Format(e.TimeFormatDay)
-	savePath := filepath.Join(config.Instance().App.ImgSavePath, day) // 按年月日归档保存
+	savePath := filepath.Join(config.Instance().App.FileSavePath, day) // 按年月日归档保存
 	err = f.IsNotExistMkDir(savePath)
 	if err != nil {
 		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
-	//保存文件, 多种存储方式, 当前为本地存储
-	//TODO
-	if err = c.SaveUploadedFile(file, filepath.Join(savePath, file.Filename)); err != nil {
+	//保存文件, 多种存储方式
+	//先保存到本地
+	saveName := filepath.Join(savePath, file.Filename)
+	if err = c.SaveUploadedFile(file, saveName); err != nil {
 		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
-	backFilePath := filepath.Join(filepath.Join(config.Instance().App.ImgUrlPath, day), file.Filename)
-	if sysos.IsWindows() {
-		backFilePath = strings.ReplaceAll(backFilePath, "\\", "/")
+
+	//再根据存储配置处理文件
+	backFilePath, err1 := store.Instance().UploadFile(file.Filename, saveName)
+	if err1 != nil {
+		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		return
 	}
+
 	a.SuccessResp().SetData(backFilePath).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 }
 
