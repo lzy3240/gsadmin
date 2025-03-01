@@ -173,8 +173,5 @@ func deleteMenuCache() {
 	items, _ := cache.Instance().GetKeys(e.UserMenu)
 	for _, v := range items {
 		_ = cache.Instance().Del(e.UserMenu, v)
-		//if strings.HasPrefix(k, e.MenuCache) {
-		//	cache.Instance().Delete(k)
-		//}
 	}
 }

@@ -47,12 +47,11 @@ func (s *SysBase) RemovePwdErrNum(loginName string) {
 func (s *SysBase) MenuServiceV2(user *model.SysUser) (cacheMenu dto.CacheMenuV2) {
 	userSvice := SysUser{}
 	menuCache, err := cache.Instance().Get(e.UserMenu, e.MenuCache+assertion.AnyToString(user.ID))
-	if err == nil { //found && menuCache
+	if err == nil {
 		err = json.Unmarshal([]byte(menuCache), &cacheMenu)
 		if err != nil {
 			log.Instance().Error("Unmarshal menu cache failed: " + err.Error())
 		}
-		//cacheMenu = menuCache.(dto.CacheMenuV2)
 	} else {
 		var authId []string
 		result := userSvice.GetAuth(user)

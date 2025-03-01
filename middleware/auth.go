@@ -64,7 +64,6 @@ func authByPage(c *gin.Context) bool {
 	if s, ok := tmp.(string); ok {
 		_ = json.Unmarshal([]byte(s), &user)
 	}
-	//user := service.GetProfile(c)
 
 	if userSvice.IsAdmin(user) { // 管理员不限制
 		return true
@@ -84,7 +83,6 @@ func authByPage(c *gin.Context) bool {
 	if err == nil { //从缓存取菜单
 		var mc dto.CacheMenuV2
 		_ = json.Unmarshal([]byte(menuCache), &mc)
-		//menu := menuCache.(dto.CacheMenuV2)
 		allowUrlArr = strings.Split(mc.AllowUrl, ",")
 	} else {
 		result := userSvice.GetAuth(user)

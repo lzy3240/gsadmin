@@ -16,11 +16,3 @@ type SysRole struct {
 func (SysRole) TableName() string {
 	return "sys_role"
 }
-
-//// 管理员信息修改页面展示
-//type RoleEditShow struct {
-//	ID       int
-//	RoleName string
-//	Status   int
-//	Checked  int
-//}

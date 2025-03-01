@@ -249,10 +249,6 @@ func (s *SysUser) UpdateProfile(req *dto.ProfileForm, operUser *model.SysUser) e
 	return nil
 }
 
-//func GetImgSavePath(path string) string {
-//	return strings.ReplaceAll(path, config.Instance().App.FileViewPath, config.Instance().App.FileSavePath)
-//}
-
 func (s *SysUser) GetLoginInfo(operUser *model.SysUser) ([]model.SysLoginLog, error) {
 	loginLog := SysLog{}
 	req := dto.SysLoginLogForm{}
