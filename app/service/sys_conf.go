@@ -19,15 +19,19 @@ type SysConf struct {
 
 func (s *SysConf) GetBaseConf() (model.Base, error) {
 	var base model.Base
-	data, found := cache.Instance().Get(e.BaseConfig)
-	if found && data != nil {
-		d, ok := data.(model.Base)
-		if ok {
-			base = d
+	data, err := cache.Instance().Get(e.SysBase, e.BaseConfig)
+	if err == nil {
+		err = json.Unmarshal([]byte(data), &base)
+		if err != nil {
+			log.Instance().Error("Unmarshal base conf failed: " + err.Error())
 		}
+		//d, ok := data.(model.Base)
+		//if ok {
+		//	base = d
+		//}
 	} else {
 		var baseConf model.SysConf
-		err := db.Instance().Model(model.SysConf{}).Where("status = 1 AND type = ?", e.BaseConfigType).First(&baseConf).Error
+		err = db.Instance().Model(model.SysConf{}).Where("status = 1 AND type = ?", e.BaseConfig).First(&baseConf).Error
 		if err != nil {
 			log.Instance().Error("SysConfService.GetBaseConf:" + err.Error())
 			return base, err
@@ -38,22 +42,23 @@ func (s *SysConf) GetBaseConf() (model.Base, error) {
 			log.Instance().Error("SysConfService.GetBaseConf:" + err.Error())
 			return base, err
 		}
-		cache.Instance().Set(e.BaseConfig, base, 0)
+		b, _ := json.Marshal(base)
+		_ = cache.Instance().Set(e.SysBase, e.BaseConfig, string(b), e.ConfCacheTime)
 	}
 	return base, nil
 }
 
 func (s *SysConf) GetSiteConf() (model.Site, error) {
 	var site model.Site
-	data, found := cache.Instance().Get(e.SiteConfig)
-	if found && data != nil {
-		d, ok := data.(model.Site)
-		if ok {
-			site = d
+	data, err := cache.Instance().Get(e.SysBase, e.SiteConfig)
+	if err == nil {
+		err = json.Unmarshal([]byte(data), &site)
+		if err != nil {
+			log.Instance().Error("Unmarshal site conf failed: " + err.Error())
 		}
 	} else {
 		var baseConf model.SysConf
-		err := db.Instance().Model(model.SysConf{}).Where("status = 1 AND type = ?", e.SiteConfigType).First(&baseConf).Error
+		err = db.Instance().Model(model.SysConf{}).Where("status = 1 AND type = ?", e.SiteConfig).First(&baseConf).Error
 		if err != nil {
 			log.Instance().Error("SysConfService.GetSiteConf:" + err.Error())
 			return site, err
@@ -64,7 +69,9 @@ func (s *SysConf) GetSiteConf() (model.Site, error) {
 			log.Instance().Error("SysConfService.GetSiteConf:" + err.Error())
 			return site, err
 		}
-		cache.Instance().Set(e.SiteConfig, site, 0)
+
+		b, _ := json.Marshal(site)
+		_ = cache.Instance().Set(e.SysBase, e.SiteConfig, string(b), e.ConfCacheTime)
 	}
 	return site, nil
 }
@@ -86,16 +93,16 @@ func (s *SysConf) EditSiteConf(req *dto.SiteConfForm) error {
 	}
 	// 查询是否存在
 	var tmp model.SysConf
-	_ = db.Instance().Model(model.SysConf{}).Where("type = ?", e.SiteConfigType).First(&tmp).Error
+	_ = db.Instance().Model(model.SysConf{}).Where("type = ?", e.SiteConfig).First(&tmp).Error
 
 	if tmp.ID == 0 { //不存在就新增
 		err = db.Instance().Model(model.SysConf{}).
-			Where("type = ?", e.SiteConfigType).
+			Where("type = ?", e.SiteConfig).
 			FirstOrCreate(&model.SysConf{Info: assertion.AnyToString(str), Status: 1}).
 			Error
 	} else { //存在就更新
 		err = db.Instance().Model(model.SysConf{}).
-			Where("type = ?", e.SiteConfigType).
+			Where("type = ?", e.SiteConfig).
 			Updates(&model.SysConf{Info: assertion.AnyToString(str), Status: 1}).
 			Error
 		if err != nil {
@@ -115,7 +122,8 @@ func (s *SysConf) EditSiteConf(req *dto.SiteConfForm) error {
 		Icp:         req.Icp,
 		SiteStatus:  req.SiteStatus,
 	}
-	cache.Instance().Set(e.SiteConfig, site, 0)
+	b, _ := json.Marshal(site)
+	_ = cache.Instance().Set(e.SysBase, e.SiteConfig, string(b), e.ConfCacheTime)
 	return nil
 }
 

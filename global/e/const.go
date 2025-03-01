@@ -30,28 +30,32 @@ const (
 	// 消息主题
 	TopicOperLog = "oper_log"
 
-	// 缓存分区, 暂不分区
-	SysConf   = "sys_config"
-	UserMenu  = "user_menu"
-	UserToken = "user_token"
+	// Session key
+	UserInfo = "user_info"
+	SysAuth  = "sys_auth"
 
-	// 缓存KEY
-	Menu          = "menu_list"
-	UserInfo      = "user_info"
-	SysAuth       = "sys_auth"
-	UserLoginErr  = "user_pwd_err_"
+	// 缓存分区
+	SysBase   = "sys_base"   //系统基础缓存区
+	SysDict   = "sys_dict"   //系统字典缓存区
+	UserMenu  = "user_menu"  //用户菜单缓存区
+	UserToken = "user_token" //用户token缓存区, 目前使用session, 不启用缓存
+	SysLogin  = "sys_login"  //用户登录控制缓存区
+
+	// 缓存key
+	UserPwdErr    = "user_pwd_err_"
 	UserLock      = "user_lock_"
-	MaxErrNum     = 5
-	MenuCache     = "menu_cache"
-	AuthList      = "auth_list"
+	MenuCache     = "menu_cache_"
+	AuthCache     = "auth_cache_"
 	BaseConfig    = "base_conf"
 	SiteConfig    = "site_conf"
 	ServerMonitor = "server_monitor"
-	LongMonTime   = 1 //server info缓存时间, 分钟
 
-	// conf
-	BaseConfigType = "base_conf"
-	SiteConfigType = "site_conf"
+	// cache time etc
+	MonCacheTime  = 60    // server monitor cache time
+	MenuCacheTime = 3600  // user menu cache time
+	UserErrTimes  = 5     // password err times
+	UserLockTime  = 300   // user lock times
+	ConfCacheTime = 86400 // config cache time
 
 	// log title
 	UserView   = "查看用户"

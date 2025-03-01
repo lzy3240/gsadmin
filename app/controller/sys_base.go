@@ -199,7 +199,7 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 	user, err := userService.SignIn(req.UserName, req.Password, clientIp)
 	if err != nil {
 		errNums := base.SetPwdErrNum(req.UserName)
-		having := e.MaxErrNum - errNums
+		having := e.UserErrTimes - errNums
 		info.Msg = "账号或密码错误"
 		info.Status = "0"
 

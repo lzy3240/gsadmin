@@ -59,7 +59,7 @@ func (a SysAuth) AuthEdit(c *gin.Context) {
 			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.AuthNodeAdd).WriteJsonExit()
 			return
 		}
-		cache.Instance().Delete(e.MenuCache + assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
+		_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
 		a.SuccessResp().SetLogTag(e.OperAdd, e.AuthNodeAdd).WriteJsonExit()
 	} else { //执行edit
 		req.SetUpdate(user.ID)
@@ -67,7 +67,7 @@ func (a SysAuth) AuthEdit(c *gin.Context) {
 			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperOther, e.AuthNodeEdit).WriteJsonExit()
 			return
 		}
-		cache.Instance().Delete(e.MenuCache + assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
+		_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
 		a.SuccessResp().SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteJsonExit()
 	}
 }
@@ -85,7 +85,7 @@ func (a SysAuth) AuthDelete(c *gin.Context) {
 		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperDel, e.AuthDelete).WriteJsonExit()
 		return
 	}
-	cache.Instance().Delete(e.MenuCache + assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
+	_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(a.GetUidFromSession())) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
 	a.SuccessResp().SetLogTag(e.OperDel, e.AuthDelete).WriteJsonExit()
 }
 

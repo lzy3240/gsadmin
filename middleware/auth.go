@@ -80,10 +80,12 @@ func authByPage(c *gin.Context) bool {
 	}
 
 	var allowUrlArr []string
-	menuCache, found := cache.Instance().Get(e.MenuCache + assertion.AnyToString(user.ID))
-	if found && menuCache != nil { //从缓存取菜单
-		menu := menuCache.(dto.CacheMenuV2)
-		allowUrlArr = strings.Split(menu.AllowUrl, ",")
+	menuCache, err := cache.Instance().Get(e.UserMenu, e.MenuCache+assertion.AnyToString(user.ID))
+	if err == nil { //从缓存取菜单
+		var mc dto.CacheMenuV2
+		_ = json.Unmarshal([]byte(menuCache), &mc)
+		//menu := menuCache.(dto.CacheMenuV2)
+		allowUrlArr = strings.Split(mc.AllowUrl, ",")
 	} else {
 		result := userSvice.GetAuth(user)
 		for _, v := range result {

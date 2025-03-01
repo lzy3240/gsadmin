@@ -24,10 +24,10 @@ type SysMonitor struct {
 }
 
 func (s *SysMonitor) Server() (model.ServerInfo, error) {
-	res, exist := cache.Instance().Get(e.ServerMonitor)
-	if exist {
+	res, err := cache.Instance().Get(e.SysBase, e.ServerMonitor)
+	if err == nil {
 		var serverInfo model.ServerInfo
-		err := json.Unmarshal([]byte(assertion.AnyToString(res)), &serverInfo)
+		err = json.Unmarshal([]byte(assertion.AnyToString(res)), &serverInfo)
 		if err == nil {
 			return serverInfo, err
 		} else {
@@ -52,7 +52,7 @@ func getServerInfo() (model.ServerInfo, error) {
 		return serverInfo, err
 	}
 
-	cache.Instance().Set(e.ServerMonitor, string(res), time.Minute*e.LongMonTime)
+	_ = cache.Instance().Set(e.SysBase, e.ServerMonitor, string(res), e.MonCacheTime)
 	return serverInfo, nil
 }
 

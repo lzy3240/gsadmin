@@ -1,19 +1,38 @@
 package cache
 
 import (
-	"github.com/patrickmn/go-cache"
+	"gsadmin/core/config"
 	"sync"
-	"time"
 )
 
 var (
-	ca   *cache.Cache
-	once sync.Once
+	caClient CaClient
+	once     sync.Once
 )
 
-func Instance() *cache.Cache {
-	once.Do(func() {
-		ca = cache.New(1*time.Minute, 3*time.Minute)
-	})
-	return ca
+type CaClient interface {
+	Set(string, string, string, int) error
+	Get(string, string) (string, error)
+	Put(string, string, string, int) error
+	Del(string, string) error
+	GetKeys(string) ([]string, error)
+	Flush(string) error
+}
+
+func Instance() CaClient {
+	if caClient == nil {
+		once.Do(func() {
+			switch config.Instance().App.CacheMode {
+			case "nuts":
+				caClient = newNutsClient()
+			case "redis":
+				caClient = newRedisClient()
+			case "mem":
+				caClient = newGoCacheClient()
+			default:
+				caClient = newGoCacheClient()
+			}
+		})
+	}
+	return caClient
 }

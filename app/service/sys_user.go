@@ -185,18 +185,18 @@ func (s *SysUser) SignIn(loginName, password string, clientIP string) (user mode
 }
 
 // ClearMenuCache 清空用户菜单缓存
-func (s *SysUser) ClearMenuCache(user *model.SysUser) {
-	if s.IsAdmin(user) {
-		cache.Instance().Delete(e.Menu)
-	} else {
-		cache.Instance().Delete(e.Menu + assertion.AnyToString(user.ID))
-	}
-}
+//func (s *SysUser) ClearMenuCache(user *model.SysUser) {
+//	if s.IsAdmin(user) {
+//		cache.Instance().Delete(e.Menu)
+//	} else {
+//		cache.Instance().Delete(e.Menu + assertion.AnyToString(user.ID))
+//	}
+//}
 
 // SignOut 用户注销
 func (s *SysUser) SignOut(operUser *model.SysUser) error {
 	if operUser != nil {
-		s.ClearMenuCache(operUser)
+		_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(operUser.ID))
 	}
 
 	online := SysUserOnline{}

@@ -170,10 +170,11 @@ func (s *SysRole) UpdateRoleStatus(req *dto.SysRoleStatusForm) error {
 }
 
 func deleteMenuCache() {
-	items := cache.Instance().Items()
-	for k, _ := range items {
-		if strings.HasPrefix(k, e.MenuCache) {
-			cache.Instance().Delete(k)
-		}
+	items, _ := cache.Instance().GetKeys(e.UserMenu)
+	for _, v := range items {
+		_ = cache.Instance().Del(e.UserMenu, v)
+		//if strings.HasPrefix(k, e.MenuCache) {
+		//	cache.Instance().Delete(k)
+		//}
 	}
 }

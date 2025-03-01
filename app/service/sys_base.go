@@ -1,15 +1,16 @@
 package service
 
 import (
+	"encoding/json"
 	"gsadmin/app/model"
 	"gsadmin/app/service/dto"
 	"gsadmin/core/baseservice"
 	"gsadmin/core/cache"
+	"gsadmin/core/log"
 	"gsadmin/core/utils/assertion"
 	"gsadmin/core/utils/str"
 	"gsadmin/global/e"
 	"strconv"
-	"time"
 )
 
 type SysBase struct {
@@ -17,8 +18,8 @@ type SysBase struct {
 }
 
 func (s *SysBase) CheckLock(loginName string) bool {
-	res, ok := cache.Instance().Get(e.UserLock + loginName)
-	if ok && res == true {
+	res, err := cache.Instance().Get(e.SysLogin, e.UserLock+loginName)
+	if err == nil && res == "true" {
 		return true
 	}
 	return false
@@ -26,12 +27,12 @@ func (s *SysBase) CheckLock(loginName string) bool {
 
 func (s *SysBase) SetPwdErrNum(loginName string) int {
 	countNum := 0
-	errNum, _ := cache.Instance().Get(e.UserLoginErr + loginName)
-	if errNum != nil {
+	errNum, err := cache.Instance().Get(e.SysLogin, e.UserPwdErr+loginName)
+	if err == nil {
 		countNum = assertion.AnyToInt(errNum)
 	}
 	countNum = countNum + 1
-	cache.Instance().Set(e.UserLoginErr+loginName, countNum, time.Minute*1)
+	_ = cache.Instance().Set(e.SysLogin, e.UserPwdErr+loginName, assertion.AnyToString(countNum), 60) //60s
 	if countNum >= 5 {
 		lock(loginName)
 	}
@@ -39,15 +40,19 @@ func (s *SysBase) SetPwdErrNum(loginName string) int {
 }
 
 func (s *SysBase) RemovePwdErrNum(loginName string) {
-	cache.Instance().Delete(e.UserLoginErr + loginName)
+	_ = cache.Instance().Del(e.SysLogin, e.UserPwdErr+loginName)
 }
 
 // MenuServiceV2 构造菜单
 func (s *SysBase) MenuServiceV2(user *model.SysUser) (cacheMenu dto.CacheMenuV2) {
 	userSvice := SysUser{}
-	hasMenu, found := cache.Instance().Get(e.MenuCache + assertion.AnyToString(user.ID))
-	if found && hasMenu != nil {
-		cacheMenu = hasMenu.(dto.CacheMenuV2)
+	menuCache, err := cache.Instance().Get(e.UserMenu, e.MenuCache+assertion.AnyToString(user.ID))
+	if err == nil { //found && menuCache
+		err = json.Unmarshal([]byte(menuCache), &cacheMenu)
+		if err != nil {
+			log.Instance().Error("Unmarshal menu cache failed: " + err.Error())
+		}
+		//cacheMenu = menuCache.(dto.CacheMenuV2)
 	} else {
 		var authId []string
 		result := userSvice.GetAuth(user)
@@ -99,7 +104,8 @@ func (s *SysBase) MenuServiceV2(user *model.SysUser) (cacheMenu dto.CacheMenuV2)
 
 		cacheMenu.AllowUrl = allowUrl
 		cacheMenu.MenuResp = menu
-		cache.Instance().Set(e.MenuCache+assertion.AnyToString(user.ID), cacheMenu, time.Hour)
+		b, _ := json.Marshal(cacheMenu)
+		_ = cache.Instance().Set(e.UserMenu, e.MenuCache+assertion.AnyToString(user.ID), string(b), e.MenuCacheTime) //用户菜单缓存1小时, 可考虑与token有效期时间一致
 	}
 	return cacheMenu
 }
@@ -107,9 +113,9 @@ func (s *SysBase) MenuServiceV2(user *model.SysUser) (cacheMenu dto.CacheMenuV2)
 // -------------------------------------------------------------------
 
 func lock(loginName string) {
-	cache.Instance().Set(e.UserLock+loginName, true, time.Minute*5)
+	_ = cache.Instance().Set(e.SysLogin, e.UserLock+loginName, "true", e.UserLockTime) //5次失败之后, 5分钟内禁止登录
 }
 
 func unLock(loginName string) {
-	cache.Instance().Delete(e.UserLock + loginName)
+	_ = cache.Instance().Del(e.SysLogin, e.UserLock+loginName)
 }
