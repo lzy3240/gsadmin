@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/spf13/viper"
 	"gsadmin/core/utils/file"
-	"gsadmin/global/initial"
 	"io/ioutil"
 	"log"
 )
@@ -78,7 +77,7 @@ func InitConfig(tomlPath ...string) {
 		log.Fatal("配置路径数量不正确")
 	}
 	if file.CheckNotExist(tomlPath[0]) {
-		err := ioutil.WriteFile(tomlPath[0], []byte(initial.ConfigToml), 0777)
+		err := ioutil.WriteFile(tomlPath[0], []byte(configToml), 0777)
 		if err != nil {
 			log.Fatal("无法写入配置模板", err.Error())
 		}

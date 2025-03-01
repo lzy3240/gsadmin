@@ -25,10 +25,6 @@ func (s *SysConf) GetBaseConf() (model.Base, error) {
 		if err != nil {
 			log.Instance().Error("Unmarshal base conf failed: " + err.Error())
 		}
-		//d, ok := data.(model.Base)
-		//if ok {
-		//	base = d
-		//}
 	} else {
 		var baseConf model.SysConf
 		err = db.Instance().Model(model.SysConf{}).Where("status = 1 AND type = ?", e.BaseConfig).First(&baseConf).Error
