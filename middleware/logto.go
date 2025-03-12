@@ -19,6 +19,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -29,6 +30,7 @@ func LogTo() func(c *gin.Context) {
 		startTime := time.Now()
 		// 获取请求参数
 		var param string
+
 		switch c.Request.Method {
 		case http.MethodPost, http.MethodPut, http.MethodGet, http.MethodDelete:
 			bf := bytes.NewBuffer(nil)
@@ -41,6 +43,13 @@ func LogTo() func(c *gin.Context) {
 			rb, _ := ioutil.ReadAll(bf)
 			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(rb))
 			param = string(rb)
+			//中文参数处理
+			text, err1 := url.QueryUnescape(param)
+			if err1 == nil {
+				param = text
+			} else {
+				log.Instance().Error("parse request param failed." + err1.Error())
+			}
 		}
 		// 继续执行
 		c.Next()
@@ -56,10 +65,9 @@ func LogTo() func(c *gin.Context) {
 		// 处理返回结果
 		outBody, _ := c.Get("result")
 		respBody := outBody.(*baseapi.CommonResp)
-		respData := assertion.AnyToString(respBody.Data)
 
-		// Tag为否不记录
-		if !respBody.Tag {
+		// Tag为false不记录
+		if respBody.Tag == false {
 			return
 		}
 
@@ -85,6 +93,7 @@ func LogTo() func(c *gin.Context) {
 		var operIp = ip.GetClientIp(c.Request)
 
 		// 暂不写完,仅写255
+		respData := assertion.AnyToString(respBody.Data)
 		if len(respData) > 256 {
 			respData = respData[0:255]
 		}
