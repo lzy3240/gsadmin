@@ -1,0 +1,489 @@
+html,
+body,
+
+.layui-layout {
+    height: 100%;
+}
+
+.cms-common {
+    /*background: #f4f4f4 url(/static/admin/images/backgroung.png) no-repeat 0 60px;*/
+    background-color: #f4f4f4;
+    padding-top: 60px;
+}
+
+/*.cms-common .layui-header,*/
+/*.cms-common .layui-body,*/
+/*.cms-common .layui-logo,*/
+/*.cms-common .layui-footer,*/
+
+.cms-common .layui-header {
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    background-color: rgba(255,255,255,.95);
+    box-shadow:0 5px 8px 0 rgba(0,0,0,.1);
+    top: 0;
+    left: 0;
+    transition: all 0.5s;
+}
+
+.cms-common .layui-logo {
+    position: absolute;
+    width: 160px;
+    height: 100%;
+    line-height: 60px;
+    text-align: center;
+}
+
+.cms-common .layui-logo img {
+    margin: 0 10px;
+    max-width: 36px;
+    max-height: 36px;
+}
+
+.cms-common .layui-logo .title {
+    font-size: 34px !important;
+    display: inline-flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    /*font-weight: 550 !important;*/
+    color: #43b899 !important;
+}
+
+.cms-common .layui-header .layui-nav {
+    position: absolute;
+    right: 100px;
+    top: 0;
+    padding: 0;
+    background: 0 0
+}
+
+.cms-common .layui-header .login {
+    position: absolute;
+    right:0;
+    width:100px;
+    height:100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cms-common .layui-header .layui-container {
+    height: 100%
+}
+
+.cms-common .layui-header .layui-nav .layui-nav-item {
+    margin: 0 16px
+}
+
+.cms-common .layui-header .layui-nav .layui-nav-item a{
+    color: #1a1a1a;
+}
+
+.cms-common .layui-header .layui-nav .layui-nav-item:hover>a{
+    color: #FFFFFF;
+    background-color:rgb(95, 184, 120);
+}
+
+
+.cms-common .layui-header .layui-nav .layui-nav-item[mobile] {
+    display: none
+}
+
+/*.cms-common .layui-header .layui-container .logo {*/
+/*    left: 15px*/
+/*}*/
+
+/*.cms-common .layui-header .layui-container .layui-nav {*/
+/*    right: 15px*/
+/*}*/
+
+.cms-common .layui-header .layui-nav .layui-badge,.header .layui-nav .layui-badge-dot {
+    right: 0
+}
+
+.cms-common .cms-list {
+    /*min-height: calc(100vh - 230px);*/
+    /*min-height: 720px;*/
+    padding: 15px 0;
+    width: 100%;
+    display: inline-block;
+}
+
+.cms-common .cms-list .left_zone {
+    padding: 10px 20px;
+    border-bottom: 1px dashed #e2e2e2;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500 !important;
+}
+
+.cms-common .cms-list .right_zone {
+    padding: 10px 10px;
+    background-color: rgba(238,238,238);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.cms-common .cms-list .right_zone .right-title {
+    padding: 2px;
+    color: #43b899;
+    text-align: center;
+    border-bottom: 1px dashed #e2e2e2;
+    font-size: 20px;
+    font-weight: 500 !important;
+}
+
+.cms-common .cms-list .right_zone .right-info {
+    padding: 5px 10px;
+    border-bottom: 1px dashed #e2e2e2;
+    font-size: 14px;
+    line-height: 2;
+}
+
+.cms-common .cms-list .right_zone>ul {
+    padding: 10px;
+    height: 360px;
+    overflow-y: scroll;
+}
+
+.cms-common .cms-list .right_zone>ul>li {
+    height: 30px;
+    border-bottom: 1px dashed #e2e2e2
+}
+
+.cms-common .cms-list .art-list {
+    align-items: center;
+    padding:20px;
+    border-bottom:1px dashed #e2e2e2;
+    position: relative;
+}
+
+.cms-common .cms-list .art-list:hover {
+    -webkit-box-shadow:0 5px 8px 0 rgba(0,0,0,.2);
+    box-shadow:0 5px 8px 0 rgba(0,0,0,.2);
+}
+
+.cms-common .cms-list .art-list .art-image {
+    padding: 0 5px;
+}
+
+.cms-common .cms-list .art-list .art-image>a>img {
+    height: 90px;
+    width: 160px;
+}
+
+.cms-common .cms-list .art-list .art-meta {
+    padding: 0 5px;
+}
+
+.cms-common .cms-list .art-list .art-title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 23px;
+    min-height: 23px;
+}
+
+.cms-common .cms-list .art-list .art-title .art-type {
+    background-color: #0084FF;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 3.6px 7.2px;
+    border-radius: 3px;
+}
+
+.cms-common .cms-list .art-list .art-title .doc-type {
+    background-color: #FF5722;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 3.6px 7.2px;
+    border-radius: 3px;
+}
+
+.cms-common .cms-list .art-list .art-info {
+    padding: 12px 0;
+    color: #666;
+    line-height: 23px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.cms-common .cms-list .art-list .art-tag {
+    color: #999;
+    font-size: 12px;
+}
+
+.art-tag>span,
+.book-tag>span,
+.doc-tag>span{
+    margin: 0 2px;
+}
+
+.cms-common .cms-list .art-detail {
+    padding: 20px 0;
+    position: relative;
+}
+
+.cms-common .cms-list .art-detail .art-title {
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 23px;
+    min-height: 23px;
+}
+
+.cms-common .cms-list .art-detail .art-tag {
+    padding: 10px 20px;
+    color: #999;
+    font-size: 14px;
+    border-bottom:1px dashed #e2e2e2;
+}
+
+.cms-common .cms-list .art-detail .art-extend {
+    height: 35px;
+}
+
+.cms-common .cms-list .art-detail .art-extend-title {
+    margin-right: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+    border: 1px solid #e3e3e3;
+    color: #4d4d4d;
+}
+
+.cms-common .cms-list .empty {
+    margin: 150px auto;
+    text-align: center;
+}
+
+.cms-common .cms-list .empty-img {
+    margin: 5px auto;
+    display: block;
+    text-align: center;
+    opacity: 0.3;
+}
+
+.cms-common .cms-list .empty-text {
+    font-size: 18px;
+    display: block;
+    margin: 24px;
+    text-align: center;
+    opacity: .5;
+}
+
+.cms-common .book-tree {
+    width: 270px;
+    position: fixed;
+    margin: 0 auto;
+    padding: 15px 15px;
+}
+.cms-common .book-tree .book-title {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 6px;
+    text-align: center;
+}
+
+.cms-common .book-tree .book-tag {
+    padding: 6px;
+    color: #999;
+    font-size: 14px;
+    border-bottom:1px dashed #e2e2e2;
+    text-align: center;
+}
+
+.cms-common .doc-view {
+    padding: 15px 0;
+    width: 100%;
+    height: 840px;
+    display: inline-block;
+}
+
+.cms-common .doc-view .doc-title {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 6px;
+    text-align: center;
+}
+
+.cms-common .doc-view .doc-tag {
+    padding: 6px;
+    color: #999;
+    font-size: 14px;
+    border-bottom:1px dashed #e2e2e2;
+    text-align: center;
+}
+
+.cms-common .page-box {
+    margin: 5px auto;
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+.cms-common .page-box .pagination {
+    display: inline-block;
+    border-radius: 4px;
+    padding-top: 10px;
+}
+
+.cms-common .page-box .pagination>.disabled>:hover {
+    color: rgb(210, 210, 210) !important;
+    background-color: #FFFFFF;
+    border: 1px solid #e3e3e0;
+    border-radius: 3px;
+    cursor: not-allowed !important;
+}
+
+.cms-common .page-box .pagination>li {
+    display: inline;
+}
+
+.cms-common .page-box .pagination>li>a,
+.cms-common .page-box .pagination>li>span{
+    color: #272727;
+    padding: 8px 16px !important;
+    background-color: #FFFFFF;
+    border: 1px solid #e3e3e0;
+    border-radius: 3px;
+}
+
+.cms-common .page-box .pagination>.active>a,
+.cms-common .page-box .pagination>.active>span{
+    color: #FFFFFF;
+    padding: 8px 16px !important;
+    background-color: #0084FF;
+    border: 1px solid #0084FF;
+    border-radius: 3px;
+}
+
+.cms-common .page-box .pagination li>a:focus,
+.cms-common .page-box .pagination li>a:hover,
+.cms-common .page-box .pagination li>span:focus,
+.cms-common .page-box .pagination li>span:hover{
+    color: #FFFFFF;
+    background-color: #0084FF;
+    border: 1px solid #0084FF;
+}
+
+.cms-common .cms-list .book-list {
+    width: 370px; height: 300px;
+    margin: 20px 5px;
+    float: left;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow:0 0 0 #fff;
+    -webkit-transition:all .3s ease;
+    transition:all .3s ease; opacity:1
+}
+
+.cms-common .cms-list .book-list:hover {
+    -webkit-box-shadow:0 5px 8px 0 rgba(0,0,0,.2);
+    box-shadow:0 5px 8px rgba(0,0,0,.2);
+}
+
+.cms-common .cms-list .book-list .book-img {
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.cms-common .cms-list .book-list .book-title {
+    width: 100%;
+    max-height: 60px;
+    display: block;
+    margin-top: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: bold;
+    color: #323232;
+}
+
+.cms-common .cms-list .book-list .book-tag {
+    color: #999999;
+    font-size: 14px;
+    overflow:hidden;
+    margin-top: 5px;
+    text-align: left;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.cms-common .search-bar {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    position: absolute;
+    left: 200px;
+    height: 100%;
+}
+
+.cms-common .layui-footer {
+    margin-top: 20px;
+    background-color: #EEEEEE;
+    height: 40px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.cms-common .layui-footer .left-box {
+    float: left;
+    width: 60%;
+    height: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.cms-common .layui-footer .right-box {
+    float: right;
+    width: 40%;
+    height: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.cms-common .layui-footer .inner-box {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 980px) {
+    .cms-common .search-bar {
+        display: none !important;
+    }
+
+    .layui-container {
+        width: 95%;
+    }
+
+    .cms-common .cms-list .book-list {
+        margin: 20px 40px;
+    }
+}
+
+/* 滚动条整体部分 */
+::-webkit-scrollbar {
+    width: 10px; /* 滚动条宽度 */
+    height: 10px; /* 滚动条高度 */
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(213,213,213); /* 滑块颜色 rgba(213,213,213) */
+    border-radius: 10px; /* 滑块圆角 */
+    border: 2px solid transparent; /* 滑块边框 */
+    background-clip: content-box; /* 从内容区域裁剪背景 */
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 轨道颜色 #f1f1f1 */
+}

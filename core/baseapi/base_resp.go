@@ -101,35 +101,35 @@ func (a *Api) SetLogTag(buType int, opTitle string) *Api {
 // WriteHtmlExit 输出Html页面
 func (a *Api) WriteHtmlExit(page string, data gin.H) {
 	a.r.Data = data
-	a.c.Set("result", a.r)
-	a.c.HTML(http.StatusOK, page, data)
-	a.c.Abort()
+	a.C.Set("result", a.r)
+	a.C.HTML(http.StatusOK, page, data)
+	a.C.Abort()
 }
 
 // WriteStringExit 输出String
 func (a *Api) WriteStringExit(format string, value ...any) {
 	a.r.Data = fmt.Sprint(format, value)
-	a.c.Set("result", a.r)
-	a.c.String(http.StatusOK, format, value...)
-	a.c.Abort()
+	a.C.Set("result", a.r)
+	a.C.String(http.StatusOK, format, value...)
+	a.C.Abort()
 }
 
 // WriteJsonExit 输出json到客户端
 func (a *Api) WriteJsonExit() {
-	a.c.Set("result", a.r)
-	a.c.JSON(http.StatusOK, a.r)
-	a.c.Abort()
+	a.C.Set("result", a.r)
+	a.C.JSON(http.StatusOK, a.r)
+	a.C.Abort()
 }
 
 // WriteCustomJsonExit 兼容个性化json写法
 func (a *Api) WriteCustomJsonExit(data any) {
-	a.c.Set("result", a.r)
-	a.c.JSON(http.StatusOK, data)
-	a.c.Abort()
+	a.C.Set("result", a.r)
+	a.C.JSON(http.StatusOK, data)
+	a.C.Abort()
 }
 
 // WriteRedirect 重定向
 func (a *Api) WriteRedirect(path string) {
-	a.c.Redirect(http.StatusFound, path)
-	a.c.Abort()
+	a.C.Redirect(http.StatusFound, path)
+	a.C.Abort()
 }

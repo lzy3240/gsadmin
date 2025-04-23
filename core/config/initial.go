@@ -6,6 +6,7 @@ const configToml = `
 Name = "gsadmin"
 Version = "V1.0.0"
 HttpPort = 8010
+BaseURL = ""
 PageSize = 20
 RunMode = "debug" #运行模式: debug; release
 CacheMode = "mem" #缓存模式: mem; redis; nuts; 默认mem

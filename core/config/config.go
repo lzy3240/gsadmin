@@ -29,6 +29,7 @@ type AppConf struct {
 	Name         string
 	Version      string
 	HttpPort     int
+	BaseURL      string
 	RunMode      string
 	CacheMode    string
 	QueueMode    string

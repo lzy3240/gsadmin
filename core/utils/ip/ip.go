@@ -11,6 +11,9 @@ import (
 )
 
 func GetCityByIp(ip string) string {
+	//https://ip9.com.cn/get?ip=60.173.235.154
+	//http://ip-api.com/json/60.173.235.154?lang=zh-CN
+	//http://whois.pconline.com.cn/ipJson.jsp?json=true&ip=60.173.235.154
 	if ip == "" {
 		return ""
 	}
@@ -28,7 +31,7 @@ func GetCityByIp(ip string) string {
 		tmp := ConvertToString(bodystr, "gbk", "utf-8")
 		p := make(map[string]interface{}, 0)
 		if err := json.Unmarshal([]byte(tmp), &p); err == nil {
-			return p["city"].(string)
+			return p["country"].(string) + "-" + p["prov"].(string) + "-" + p["city"].(string)
 		}
 	}
 	return ""

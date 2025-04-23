@@ -5,7 +5,7 @@ window.rootPath = (function(src) {
 
 layui.config({
 	base: rootPath + "module/",
-	version: "3.7.8.Release"
+	version: "4.0.0.Release"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件
@@ -33,12 +33,15 @@ layui.config({
 	loading: "loading",		// 加载组件
 	cropper:"cropper",		// 裁剪组件
 	convert:"convert",		// 数据转换
-	yaml:"yaml",			// yaml 解析组件
+	yaml:"yaml",			// yaml解析组件
 	context: "context",		// 上下文组件
 	http: "http",			// ajax请求组件
 	theme: "theme",			// 主题转换
 	message: "message",     // 通知组件
 	dict: "dict",			// 字典组件
+	mdEditor: "mdEditor",   // md编辑器
+	rightMenu: "rightMenu",  // md右键菜单
+	umi:"umi", 				//用户标识信息
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
 });

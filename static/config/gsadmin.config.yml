@@ -47,7 +47,7 @@ colors:
 - id: "1"
   color: "#FF0000"
 - id: "2"
-  color: "#5FB878"
+  color: "#43b899"
 - id: "3"
   color: "#1E9FFF"
 - id: "4"
@@ -58,13 +58,13 @@ colors:
 links: 
 - icon: "layui-icon layui-icon-website"
   title: "官方网站"
-  href: "http://www.baidu.com"
+  href: "http://www.anylink.vip"
 - icon: "layui-icon layui-icon-read"
   title: "开发文档"
-  href: "http://www.baidu.com/doc/"
+  href: "https://github.com/lzy3240/gsadmin"
 - icon: "layui-icon layui-icon-fonts-code"
   title: "开源地址"
-  href: "https://"
+  href: "https://github.com/lzy3240/gsadmin"
 ## 其他配置
 other: 
   ## 主页动画时长

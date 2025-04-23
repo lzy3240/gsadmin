@@ -1,0 +1,12 @@
+/*选中后的颜色  >是必要的，如果不加，当点击的是父级，子元素的所有颜色都会变*/
+.tree-item-clicked>.layui-tree-entry .layui-tree-txt{
+    background:#43b899!important;
+    padding-left:5px;
+    padding-right:5px;
+    color: #ffffff;
+}
+/*hover时的颜色*/
+.layui-tree-line .layui-tree-entry:hover .layui-tree-txt{
+    background:#ffb800;
+    color: #0d0d0d;
+}

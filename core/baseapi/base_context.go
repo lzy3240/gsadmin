@@ -9,14 +9,25 @@ import (
 )
 
 type Api struct {
-	c *gin.Context
+	C *gin.Context
 	r *CommonResp
+	//Error error
 }
+
+// AddError 处理错误
+//func (a *Api) AddError(err error) {
+//	if a.Error == nil {
+//		a.Error = err
+//	} else if a.Error != nil {
+//		log.Instance().Error(err.Error())
+//		a.Error = fmt.Errorf("%v;%w", a.Error, err)
+//	}
+//}
 
 // MountCtx 挂载上下文
 func (a *Api) MountCtx(c *gin.Context) *Api {
-	if a.c == nil {
-		a.c = c
+	if a.C == nil {
+		a.C = c
 	}
 	return a
 }
@@ -29,9 +40,9 @@ func (a *Api) Bind(d interface{}, bindings ...binding.Binding) error {
 	}
 	for i := range bindings {
 		if bindings[i] == nil {
-			err = a.c.ShouldBindUri(d)
+			err = a.C.ShouldBindUri(d)
 		} else {
-			err = a.c.ShouldBindWith(d, bindings[i])
+			err = a.C.ShouldBindWith(d, bindings[i])
 		}
 		if err != nil && err.Error() == "EOF" {
 			err = nil
