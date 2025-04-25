@@ -7,11 +7,17 @@ import (
 	"gsadmin/core/config"
 	"gsadmin/core/utils/session"
 	"gsadmin/middleware"
+	"html/template"
 )
 
 func initRouter() *gin.Engine { // staticFs, templateFs embed.FS
 	gin.SetMode(config.Instance().App.RunMode)
 	r := gin.New()
+	
+	//注册方法(html渲染使用)
+	r.SetFuncMap(template.FuncMap{
+		"DateFormat": f.DateFormat,
+	})
 
 	//模版文件加载, 两种模式选择一种: 方式一: 编译到程序; 方式二: 静态路径
 	//t, _ := template.ParseFS(templateFs, "template/**/**/*.html")
