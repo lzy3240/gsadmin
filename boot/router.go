@@ -32,13 +32,10 @@ func initRouter() *gin.Engine { // staticFs, templateFs embed.FS
 	r.Use(session.EnableCookieSession(config.Instance().App.JwtSecret))
 
 	//注册系统路由
-	router.RegisterSystemRouter()
+	router.RegisterSystemRouter(r)
 
 	//注册业务路由
 	//TODO
-
-	//初始化路由
-	baserouter.InitializeRouter(r)
 
 	return r
 }

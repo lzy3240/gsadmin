@@ -1,8 +1,8 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
 	"gsadmin/app/controller"
-	"gsadmin/core/baserouter"
 )
 
 var (
@@ -18,8 +18,8 @@ var (
 )
 
 // 注册路由
-func RegisterSystemRouter() {
-	baserouter.RegisterRouter(CommonRouter)
-	baserouter.RegisterRouter(SystemRouter)
-	baserouter.RegisterRouter(MonitorRouter)
+func RegisterSystemRouter(r *gin.Engine) {
+	CommonRouter(r)
+	SystemRouter(r)
+	MonitorRouter(r)
 }
