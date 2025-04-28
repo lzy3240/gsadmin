@@ -28,6 +28,31 @@ type SysBase struct {
 	baseapi.Api
 }
 
+// ----------------layout------------------
+
+//-----------------------------前台----------------------------
+
+func (a SysBase) Welcome(c *gin.Context) {
+	a.MountCtx(c)
+
+	//获取ip
+	cip := ip.GetClientIp(c.Request)
+	//获取归属地
+	addr := ip.GetCityByIp(cip)
+	//获取site conf
+	svice := service.SysConf{}
+	site, err := svice.GetSiteConf()
+	if err != nil {
+		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		return
+	}
+
+	a.SuccessResp().SetData(gin.H{
+		"site":  site,
+		"local": gin.H{"ip": cip, "addr": addr},
+	}).WriteJsonExit()
+}
+
 // ----------------system-------------------
 
 // Base 基础样式
@@ -50,6 +75,11 @@ func (a SysBase) Menu(c *gin.Context) {
 	menu := service.SysBase{}
 	menuResp := menu.MenuServiceV2(user)
 	a.SuccessResp().WriteCustomJsonExit(menuResp.MenuResp)
+}
+
+// UploadFile 文件上传页面
+func (a SysBase) UploadFile(c *gin.Context) {
+	a.MountCtx(c).SuccessResp().WriteHtmlExit("upload_file.html", nil)
 }
 
 // Upload 文件上传
@@ -105,8 +135,8 @@ func (a SysBase) IndexPage(c *gin.Context) {
 	})
 }
 
-// FramePage 引用主页
-func (a SysBase) FramePage(c *gin.Context) {
+// MainPage 引用主页
+func (a SysBase) MainPage(c *gin.Context) {
 	a.MountCtx(c).SuccessResp().WriteHtmlExit("main.html", gin.H{})
 }
 

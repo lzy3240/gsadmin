@@ -84,6 +84,10 @@ INSERT INTO `sys_auth` VALUES ('52', '消息确认', '/system/notice/status', '0
 INSERT INTO `sys_auth` VALUES ('53', '消息列表接口', '/system/notice/json', '0', '51', '2', 'layui-icon ', '1', '1', '2', '1', '0', '0', '2024-10-23 11:57:51', '2024-10-23 11:57:51');
 INSERT INTO `sys_auth` VALUES ('54', '未读消息接口', '/system/notice', '0', '51', '4', 'layui-icon ', '1', '1', '2', '1', '0', '1', '2024-10-23 11:57:51', '2024-10-29 21:22:54');
 INSERT INTO `sys_auth` VALUES ('55', '消息查看', '/system/notice/edit', '0', '51', '1', 'layui-icon ', '1', '1', '2', '0', '1', '1', '2024-10-29 21:22:23', '2024-10-29 21:22:23');
+INSERT INTO `sys_auth` VALUES ('112', '文章管理', '/', '0', '0', '3', 'layui-icon layui-icon-tabs', '1', '1', '0', '0', '1', '1', '2025-03-13 10:35:37', '2025-03-13 10:36:11');
+INSERT INTO `sys_auth` VALUES ('113', '书籍管理', '/', '0', '0', '4', 'layui-icon layui-icon-read', '1', '1', '0', '0', '1', '1', '2025-03-13 10:36:45', '2025-03-13 10:36:45');
+INSERT INTO `sys_auth` VALUES ('114', '文章列表', '/cms/article/list', '0', '112', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:37:30', '2025-03-13 10:37:30');
+INSERT INTO `sys_auth` VALUES ('115', '书籍列表', '/cms/book/list', '0', '113', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:38:02', '2025-03-13 10:38:02');
 
 -- ----------------------------
 -- Table structure for sys_conf
@@ -105,8 +109,8 @@ CREATE TABLE `sys_conf` (
 -- ----------------------------
 -- Records of sys_conf
 -- ----------------------------
-INSERT INTO `sys_conf` VALUES ('1', 'base_conf', '{\"colors\": [{\"color\": \"#FF0000\",\"id\": \"1\"},{\"color\": \"#5FB878\",\"id\": \"2\"},{\"color\": \"#1E9FFF\",\"id\": \"3\"},{\"color\": \"#FFB800\",\"id\": \"4\"},{\"color\": \"darkgray\",\"id\": \"5\"}],\"header\": {\"message\": \"/system/notice\"},\"links\": [{\"href\": \"http://www.baidu.com\",\"icon\": \"layui-icon layui-icon-auz\",\"title\": \"官方网站\"},{\"href\": \"https://github.com/lzy3240/gsadmin\",\"icon\": \"layui-icon layui-icon-auz\",\"title\": \"开发文档\"},{\"href\": \"https://github.com/lzy3240/gsadmin\",\"icon\": \"layui-icon layui-icon-auz\",\"title\": \"开源地址\"}],\"logo\": {\"image\": \"/static/admin/images/logo.png\",\"title\": \"gsadmin\"},\"menu\": {\"accordion\": true,\"control\": false,\"data\": \"/system/menu\",\"method\": \"GET\",\"select\": \"60\"},\"other\": {\"autoHead\": false,\"keepLoad\": 100},\"tab\": {\"index\": {\"href\": \"/system/main\",\"id\": \"60\",\"title\": \"首页\"},\"keepState\": true,\"muiltTab\": true,\"tabMax\": 30},\"theme\": {\"allowCustom\": true,\"defaultColor\": \"2\",\"defaultMenu\": \"dark-theme\"}}', '1', null, null, '2021-05-28 10:48:35', '2021-05-28 10:48:35');
-INSERT INTO `sys_conf` VALUES ('2', 'site_conf', '{\"web_name\":\"gsadmin\",\"web_url\":\"http://123/\",\"logo_url\":\"http://123/\",\"key_words\":\"admin\",\"description\":\"11223344\",\"copyright\":\"456542\",\"icp\":\"789873\",\"site_status\":1}', '1', null, null, '2021-05-28 10:48:35', '2024-11-03 19:51:28');
+INSERT INTO `sys_conf` VALUES ('1', 'base_conf', '{\r\n	\"colors\": [\r\n {\r\n \"color\": \"#FF0000\",\r\n \"id\": \"1\"\r\n },\r\n {\r\n \"color\": \"#43B899\",\r\n \"id\": \"2\"\r\n },\r\n {\r\n \"color\": \"#1E9FFF\",\r\n \"id\": \"3\"\r\n },\r\n {\r\n \"color\": \"#FFB800\",\r\n \"id\": \"4\"\r\n },\r\n {\r\n \"color\": \"darkgray\",\r\n \"id\": \"5\"\r\n }\r\n ],\r\n	\"header\": {\r\n \"message\": \"/system/notice\"\r\n },\r\n \"links\": [\r\n {\r\n \"href\": \"http://www.anylink.vip\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"官方网站\"\r\n },\r\n {\r\n \"href\": \"https://github.com/lzy3240/gsadmin\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"开发文档\"\r\n },\r\n {\r\n \"href\": \"https://github.com/lzy3240/gsadmin\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"开源地址\"\r\n }\r\n ],\r\n	\"logo\": {\r\n \"image\": \"/static/admin/images/logo.png\",\r\n \"title\": \"gsadmin\"\r\n },\r\n	\"menu\": {\r\n \"accordion\": true,\r\n \"control\": false,\r\n \"data\": \"/system/menu\",\r\n \"method\": \"GET\",\r\n \"select\": \"60\"\r\n },\r\n	\"other\": {\r\n \"autoHead\": false,\r\n \"keepLoad\": 100\r\n	},\r\n	\"tab\": {\r\n \"index\": {\r\n \"href\": \"/system/main\",\r\n \"id\": \"60\",\r\n \"title\": \"首页\"\r\n },\r\n \"keepState\": true,\r\n \"muiltTab\": true,\r\n \"tabMax\": 30\r\n	},\r\n	\"theme\": {\r\n \"allowCustom\": true,\r\n \"defaultColor\": \"2\",\r\n \"defaultMenu\": \"dark-theme\"\r\n }\r\n}', '1', 1, 1, '2021-05-28 10:48:35', '2021-05-28 10:48:35');
+INSERT INTO `sys_conf` VALUES ('2', 'site_conf', '{\"web_name\":\"gsdoc\",\"web_url\":\"http://123/\",\"logo_url\":\"http://123/\",\"key_words\":\"admin\",\"description\":\"GsAdmin是基于Golang + Layui + MySql的轻量级极速后台开发框架，干净不臃肿、操作简单、开箱即用；通用型的后台权限管理机制，容易功能定制和二次开发，帮助开发者简单高效降低二次开发成本。\",\"copyright\":\"Copyright © 2025 gsadmin.com MIT license\",\"icp\":\"皖ICP备 1234567890号\",\"site_status\":1}', '1', 1, 1, '2021-05-28 10:48:35', '2025-04-22 13:31:00');
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -165,6 +169,8 @@ INSERT INTO `sys_dict_data` VALUES ('31', 'sys_notice_read', '未读', '0', '2',
 INSERT INTO `sys_dict_data` VALUES ('32', 'sys_audit_status', '待审核11', '0', '1', '1', '待审核', '0', '0', '1', '2024-11-04 10:09:54', '2024-11-04 16:22:53');
 INSERT INTO `sys_dict_data` VALUES ('33', 'sys_audit_status', '通过', '1', '2', '1', '审核通过', '0', '0', '0', '2024-11-04 10:11:16', null);
 INSERT INTO `sys_dict_data` VALUES ('34', 'sys_audit_status', '不通过', '2', '3', '1', '审核不通过', '0', '0', '0', '2024-11-04 10:17:07', null);
+INSERT INTO `sys_dict_data` VALUES ('35', 'cms_show_status', '隐藏', '0', '0', '1', '主页隐藏', '0', '1', '1', '2025-03-26 09:29:31', '2025-03-26 09:29:31');
+INSERT INTO `sys_dict_data` VALUES ('36', 'cms_show_status', '展示', '1', '1', '1', '主页展示', '0', '1', '1', '2025-03-26 09:29:44', '2025-03-26 09:29:44');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -199,6 +205,7 @@ INSERT INTO `sys_dict_type` VALUES ('9', 'sys_oper_type', '操作类型', '1', '
 INSERT INTO `sys_dict_type` VALUES ('10', 'sys_common_status', '系统状态', '1', '登录状态列表', '1', '0', '0', '2023-05-08 15:56:38', null);
 INSERT INTO `sys_dict_type` VALUES ('11', 'sys_audit_status', '审核状态', '1', '审核状态列表', '1', '0', '1', '2023-03-23 09:46:42', null);
 INSERT INTO `sys_dict_type` VALUES ('12', 'sys_notice_read', '通知已读', '1', '通知已读列表', '1', '0', '0', '2023-03-23 09:46:42', null);
+INSERT INTO `sys_dict_type` VALUES ('13', 'cms_show_status', '公开状态', '1', '主页是否公开状态', '0', '1', '1', '2025-03-26 09:21:12', '2025-03-26 09:30:55');
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -278,12 +285,6 @@ CREATE TABLE `sys_oper_log` (
 -- ----------------------------
 INSERT INTO `sys_oper_log` VALUES ('1', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/status', '127.0.0.1', '内网IP', '{\"form\":{\"id\":[\"2\"],\"status\":[\"0\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:16:01');
 INSERT INTO `sys_oper_log` VALUES ('2', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/status', '127.0.0.1', '内网IP', '{\"form\":{\"id\":[\"2\"],\"status\":[\"1\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:16:02');
-INSERT INTO `sys_oper_log` VALUES ('3', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/edit', '127.0.0.1', '内网IP', '{\"form\":{\"email\":[\"ceshi@qq.com\"],\"id\":[\"2\"],\"login_name\":[\"user\"],\"phone\":[\"18912345678\"],\"real_name\":[\"user\"],\"role_ids\":[\"2\"],\"status\":[\"on\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:16:45');
-INSERT INTO `sys_oper_log` VALUES ('4', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/edit', '127.0.0.1', '内网IP', '{\"form\":{\"email\":[\"2222@qq.com\"],\"id\":[\"1\"],\"login_name\":[\"admin\"],\"phone\":[\"13000000000\"],\"real_name\":[\"admin\"],\"role_ids\":[\"1\"],\"status\":[\"on\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:16:51');
-INSERT INTO `sys_oper_log` VALUES ('5', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/status', '127.0.0.1', '内网IP', '{\"form\":{\"id\":[\"2\"],\"status\":[\"0\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:18:39');
-INSERT INTO `sys_oper_log` VALUES ('6', '修改用户', '2', 'POST', 'POST', '1', '1', 'admin', '', '/system/user/status', '127.0.0.1', '内网IP', '{\"form\":{\"id\":[\"2\"],\"status\":[\"1\"]}}', '1', '{\"code\":200,\"msg\":\"更新成功\",\"data\":null,\"type\":2,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:18:46');
-INSERT INTO `sys_oper_log` VALUES ('7', '用户登陆', '0', 'POST', 'POST', '1', '1', 'admin', '', '/login', '127.0.0.1', '内网IP', 'null', '1', '{\"code\":200,\"msg\":\"登陆成功\",\"data\":null,\"type\":0,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-04 16:23:14');
-INSERT INTO `sys_oper_log` VALUES ('8', '用户登陆', '0', 'POST', 'POST', '1', '1', 'admin', '', '/login', '127.0.0.1', '内网IP', 'null', '1', '{\"code\":200,\"msg\":\"登陆成功\",\"data\":null,\"type\":0,\"count\":0}', '','', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', '2024-11-05 09:08:04');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -353,8 +354,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', '63b11d6a04a9d76c6c8134bf99a31306', '99', '1', '13000000000', '2222@qq.com', '/runtime/upload/images/20241101/1730447790000.jpg', '超级管理员', 'JsnOHR5tZk', '127.0.0.1', '2024-11-05 09:08:04', '1', '0', '0', '2020-10-14 17:04:30', '2024-11-05 09:08:04');
-INSERT INTO `sys_user` VALUES ('2', 'user', 'user', '3fae7af9815b0886a2a95dba8356f589', '1', '2', '18912345678', 'ceshi@qq.com', '/runtime/upload/images/20241030/1730302348000.jpg', '普通用户', 'vbKG0Djx0U', '127.0.0.1', '2024-10-31 20:59:15', '1', '1', '0', '2020-10-14 17:04:30', '2024-11-04 16:18:47');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', '63b11d6a04a9d76c6c8134bf99a31306', '99', '1', '13000000000', '2222@qq.com', '', '超级管理员', 'JsnOHR5tZk', '127.0.0.1', '2024-11-05 09:08:04', '1', '0', '0', '2020-10-14 17:04:30', '2024-11-05 09:08:04');
+INSERT INTO `sys_user` VALUES ('2', 'user', 'user', '3fae7af9815b0886a2a95dba8356f589', '1', '2', '18912345678', 'ceshi@qq.com', '', '普通用户', 'vbKG0Djx0U', '127.0.0.1', '2024-10-31 20:59:15', '1', '1', '0', '2020-10-14 17:04:30', '2024-11-04 16:18:47');
 
 -- ----------------------------
 -- Table structure for sys_user_online

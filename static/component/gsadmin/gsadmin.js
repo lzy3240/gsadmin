@@ -41,7 +41,6 @@ layui.config({
 	dict: "dict",			// 字典组件
 	mdEditor: "mdEditor",   // md编辑器
 	rightMenu: "rightMenu",  // md右键菜单
-	umi:"umi", 				//用户标识信息
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
 });

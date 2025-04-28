@@ -101,17 +101,17 @@ func getSysInfo() model.SysInfo {
 func getDiskInfo() []model.DiskInfo {
 	var di []model.DiskInfo
 
-	infos, _ := disk.IOCounters()
+	infos, _ := disk.Partitions(false)
 	for _, info := range infos {
-		uinfo, _ := disk.Usage(info.Name)
+		uinfo, _ := disk.Usage(info.Mountpoint)
 		di = append(di, model.DiskInfo{
+			Device:      info.Device,
 			Path:        uinfo.Path,
+			FsType:      info.Fstype,
 			TotalCap:    str.Decimal(float64(uinfo.Total) / 1024 / 1024 / 1024),
 			FreeCap:     str.Decimal(float64(uinfo.Free) / 1024 / 1024 / 1024),
 			UsedCap:     str.Decimal(float64(uinfo.Used) / 1024 / 1024 / 1024),
 			UsedPercent: str.Decimal(uinfo.UsedPercent),
-			ReadBytes:   info.ReadBytes,
-			WriteBytes:  info.WriteBytes,
 		})
 	}
 

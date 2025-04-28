@@ -1,8 +1,8 @@
 -- name: create-sys-user
 INSERT INTO `sys_user` (`id`, `login_name`, `real_name`, `password`, `level`, `role_ids`, `phone`, `email`, `avatar`, `remark`, `salt`, `last_ip`, `last_login`, `status`, `create_id`, `update_id`, `created_at`, `updated_at`)
 VALUES
-    (1, 'admin', 'admin', '63b11d6a04a9d76c6c8134bf99a31306', '99', '', '13000000000', '2222@qq.com', '/runtime/upload/images/20241101/1730447790000.jpg', '超级管理员', 'JsnOHR5tZk', '127.0.0.1', '2024-11-04 10:03:06', '1', '0', '0', '2020-10-14 17:04:30', '2024-11-04 10:03:07'),
-    (2, 'user', 'user', '3fae7af9815b0886a2a95dba8356f589', '1', '', '18912345678', 'ceshi@qq.com', '/runtime/upload/images/20241030/1730302348000.jpg', '普通用户', 'vbKG0Djx0U', '127.0.0.1', '2024-10-31 20:59:15', '1', '1', '0', '2020-10-14 17:04:30', '2024-11-04 11:08:49');
+    (1, 'admin', 'admin', '63b11d6a04a9d76c6c8134bf99a31306', '99', '', '13000000000', '2222@qq.com', '', '超级管理员', 'JsnOHR5tZk', '127.0.0.1', '2024-11-04 10:03:06', '1', '0', '0', '2020-10-14 17:04:30', '2024-11-04 10:03:07'),
+    (2, 'user', 'user', '3fae7af9815b0886a2a95dba8356f589', '1', '', '18912345678', 'ceshi@qq.com', '', '普通用户', 'vbKG0Djx0U', '127.0.0.1', '2024-10-31 20:59:15', '1', '1', '0', '2020-10-14 17:04:30', '2024-11-04 11:08:49');
 
 
 -- name: create-sys-auth
@@ -50,7 +50,11 @@ VALUES
     (52, '消息确认', '/system/notice/status', '0', '51', '2', 'layui-icon ', '1', '1', '2', '1', '0', '1', '2024-10-21 15:30:33', '2024-10-29 21:22:34'),
     (53, '消息列表接口', '/system/notice/json', '0', '51', '2', 'layui-icon ', '1', '1', '2', '1', '0', '0', '2024-10-23 11:57:51', '2024-10-23 11:57:51'),
     (54, '未读消息接口', '/system/notice', '0', '51', '4', 'layui-icon ', '1', '1', '2', '1', '0', '1', '2024-10-23 11:57:51', '2024-10-29 21:22:54'),
-    (55, '消息查看', '/system/notice/edit', '0', '51', '1', 'layui-icon ', '1', '1', '2', '0', '1', '1', '2024-10-29 21:22:23', '2024-10-29 21:22:23');
+    (55, '消息查看', '/system/notice/edit', '0', '51', '1', 'layui-icon ', '1', '1', '2', '0', '1', '1', '2024-10-29 21:22:23', '2024-10-29 21:22:23'),
+    (112, '文章管理', '/', '0', '0', '3', 'layui-icon layui-icon-tabs', '1', '1', '0', '0', '1', '1', '2025-03-13 10:35:37', '2025-03-13 10:36:11'),
+    (113, '书籍管理', '/', '0', '0', '4', 'layui-icon layui-icon-read', '1', '1', '0', '0', '1', '1', '2025-03-13 10:36:45', '2025-03-13 10:36:45'),
+    (114, '文章列表', '/cms/article/list', '0', '112', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:37:30', '2025-03-13 10:37:30'),
+    (115, '书籍列表', '/cms/book/list', '0', '113', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:38:02', '2025-03-13 10:38:02');
 
 
 -- name: create-sys-role
@@ -70,8 +74,8 @@ VALUES
 -- name: create-sys-conf
 INSERT INTO `sys_conf` (`id`, `type`, `info`, `status`, `created_at`, `updated_at`, `create_id`, `update_id`)
 VALUES
-    (1, 'base_conf', '{"colors": [{"color": "#FF0000","id": "1"},{"color": "#5FB878","id": "2"},{"color": "#1E9FFF","id": "3"},{"color": "#FFB800","id": "4"},{"color": "darkgray","id": "5"}],"header": {"message": "/system/notice"},"links": [{"href": "http://www.baidu.com","icon": "layui-icon layui-icon-auz","title": "官方网站"},{"href": "http://www.baidu.com","icon": "layui-icon layui-icon-auz","title": "开发文档"},{"href": "https://www.baidu.com","icon": "layui-icon layui-icon-auz","title": "开源地址"}],"logo": {"image": "/static/admin/images/logo.png","title": "gsadmin"},"menu": {"accordion": true,"control": false,"data": "/system/menu","method": "GET","select": "60"},"other": {"autoHead": false,"keepLoad": 100},"tab": {"index": {"href": "/system/main","id": "60","title": "首页"},"keepState": true,"muiltTab": true,"tabMax": 30},"theme": {"allowCustom": true,"defaultColor": "2","defaultMenu": "dark-theme"}}', '1', '2021-05-28 10:48:35', '2021-05-28 10:48:35', NULL, NULL),
-    (2, 'site_conf', '{"web_name":"gsadmin","web_url":"http://123/","logo_url":"http://123/","key_words":"admin","description":"11223344","copyright":"456542","icp":"789873","site_status":1}', '1', '2021-05-28 10:48:35', '2024-11-03 19:51:28', NULL, NULL);
+    (1, 'base_conf', '{\r\n	\"colors\": [\r\n {\r\n \"color\": \"#FF0000\",\r\n \"id\": \"1\"\r\n },\r\n {\r\n \"color\": \"#43B899\",\r\n \"id\": \"2\"\r\n },\r\n {\r\n \"color\": \"#1E9FFF\",\r\n \"id\": \"3\"\r\n },\r\n {\r\n \"color\": \"#FFB800\",\r\n \"id\": \"4\"\r\n },\r\n {\r\n \"color\": \"darkgray\",\r\n \"id\": \"5\"\r\n }\r\n ],\r\n	\"header\": {\r\n \"message\": \"/system/notice\"\r\n },\r\n \"links\": [\r\n {\r\n \"href\": \"http://www.anylink.vip\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"官方网站\"\r\n },\r\n {\r\n \"href\": \"https://github.com/lzy3240/gsadmin\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"开发文档\"\r\n },\r\n {\r\n \"href\": \"https://github.com/lzy3240/gsadmin\",\r\n \"icon\": \"layui-icon layui-icon-auz\",\r\n \"title\": \"开源地址\"\r\n }\r\n ],\r\n	\"logo\": {\r\n \"image\": \"/static/admin/images/logo.png\",\r\n \"title\": \"gsadmin\"\r\n },\r\n	\"menu\": {\r\n \"accordion\": true,\r\n \"control\": false,\r\n \"data\": \"/system/menu\",\r\n \"method\": \"GET\",\r\n \"select\": \"60\"\r\n },\r\n	\"other\": {\r\n \"autoHead\": false,\r\n \"keepLoad\": 100\r\n	},\r\n	\"tab\": {\r\n \"index\": {\r\n \"href\": \"/system/main\",\r\n \"id\": \"60\",\r\n \"title\": \"首页\"\r\n },\r\n \"keepState\": true,\r\n \"muiltTab\": true,\r\n \"tabMax\": 30\r\n	},\r\n	\"theme\": {\r\n \"allowCustom\": true,\r\n \"defaultColor\": \"2\",\r\n \"defaultMenu\": \"dark-theme\"\r\n }\r\n}', '1', '2021-05-28 10:48:35', '2021-05-28 10:48:35', NULL, NULL),
+    (2, 'site_conf', '{\"web_name\":\"gsdoc\",\"web_url\":\"http://123/\",\"logo_url\":\"http://123/\",\"key_words\":\"admin\",\"description\":\"GsAdmin是基于Golang + Layui + MySql的轻量级极速后台开发框架，干净不臃肿、操作简单、开箱即用；通用型的后台权限管理机制，容易功能定制和二次开发，帮助开发者简单高效降低二次开发成本。\",\"copyright\":\"Copyright © 2025 gsadmin.com MIT license\",\"icp\":\"皖ICP备 1234567890号\",\"site_status\":1}', '1', '2021-05-28 10:48:35', '2025-04-22 13:31:00', NULL, NULL);
 
 
 -- name: create-sys-dict-type
@@ -88,7 +92,8 @@ VALUES
     (9, 'sys_oper_type', '操作类型', '1', '1', '0', '0', '2023-05-08 15:56:38', NULL, '操作类型列表'),
     (10, 'sys_common_status', '系统状态', '1', '1', '0', '0', '2023-05-08 15:56:38', NULL, '登录状态列表'),
     (11, 'sys_audit_status', '审核状态', '1', '1', '0', '1', '2023-03-23 09:46:42', NULL, '审核状态列表'),
-    (12, 'sys_notice_read', '通知已读', '1', '1', '0', '0', '2023-03-23 09:46:42', NULL, '通知已读列表');
+    (12, 'sys_notice_read', '通知已读', '1', '1', '0', '0', '2023-03-23 09:46:42', NULL, '通知已读列表'),
+    (13, 'cms_show_status', '公开状态', '1', '0', '1', '1', '2025-03-26 09:21:12', '2025-03-26 09:30:55', '主页是否公开状态');
 
 
 -- name: create-sys-dict-data
@@ -127,4 +132,6 @@ VALUES
     (31, 'sys_notice_read', '未读', '0', '2', '1', '未读状态', '0', '0', '0', '2024-10-22 22:10:02', NULL),
     (32, 'sys_audit_status', '待审核11', '0', '1', '1', '待审核', '0', '0', '1', '2024-11-04 10:09:54', NULL),
     (33, 'sys_audit_status', '通过', '1', '2', '1', '审核通过', '0', '0', '0', '2024-11-04 10:11:16', NULL),
-    (34, 'sys_audit_status', '不通过', '2', '3', '1', '审核不通过', '0', '0', '0', '2024-11-04 10:17:07', NULL);
+    (34, 'sys_audit_status', '不通过', '2', '3', '1', '审核不通过', '0', '0', '0', '2024-11-04 10:17:07', NULL),
+    (35, 'cms_show_status', '隐藏', '0', '0', '1', '主页隐藏', '0', '1', '1', '2025-03-26 09:29:31', '2025-03-26 09:29:31'),
+    (36, 'cms_show_status', '展示', '1', '1', '1', '主页展示', '0', '1', '1', '2025-03-26 09:29:44', '2025-03-26 09:29:44');

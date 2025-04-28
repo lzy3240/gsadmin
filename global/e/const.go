@@ -49,6 +49,7 @@ const (
 	BaseConfig    = "base_conf"
 	SiteConfig    = "site_conf"
 	ServerMonitor = "server_monitor"
+	CmsPvDate     = "cms_pv_date_" //cms pv date key
 
 	// cache time etc
 	MonCacheTime  = 60    // server monitor cache time
@@ -76,7 +77,7 @@ const (
 	RoleDelete = "删除角色"
 	RoleSave   = "权限分配"
 
-	DefaultUpload = "上传图片"
+	DefaultUpload = "上传文件"
 
 	SiteEdit = "更新站点设置"
 	BaseEdit = "更新基础配置"

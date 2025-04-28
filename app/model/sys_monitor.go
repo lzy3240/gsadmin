@@ -1,7 +1,7 @@
 package model
 
 // 系统监控信息不入库
-// Server信息
+// ServerInfo
 type ServerInfo struct {
 	CpuInfo  CpuInfo    `json:"cpuInfo"`
 	MemInfo  MemInfo    `json:"memInfo"`
@@ -41,11 +41,11 @@ type SysInfo struct {
 }
 
 type DiskInfo struct {
+	Device      string  `json:"device"`
 	Path        string  `json:"path"`
+	FsType      string  `json:"fsType"`
 	TotalCap    float64 `json:"totalCap"`
 	FreeCap     float64 `json:"freeCap"`
 	UsedCap     float64 `json:"usedCap"`
 	UsedPercent float64 `json:"usedPercent"`
-	ReadBytes   uint64  `json:"readBytes"`
-	WriteBytes  uint64  `json:"writeBytes"`
 }

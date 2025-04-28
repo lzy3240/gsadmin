@@ -47,6 +47,12 @@ func (a SysRole) RoleAdd(c *gin.Context) {
 		return
 	}
 
+	if req.Status == "" {
+		req.Status = "0"
+	} else if req.Status == "on" {
+		req.Status = "1"
+	}
+
 	req.SetCreate(user.ID)
 	roleSvice := service.SysRole{}
 	if err := roleSvice.Insert(&req); err != nil {

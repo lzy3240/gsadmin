@@ -31,7 +31,30 @@ func GetCityByIp(ip string) string {
 		tmp := ConvertToString(bodystr, "gbk", "utf-8")
 		p := make(map[string]interface{}, 0)
 		if err := json.Unmarshal([]byte(tmp), &p); err == nil {
-			return p["country"].(string) + "-" + p["prov"].(string) + "-" + p["city"].(string)
+			var country = ""
+			var prov = ""
+			var city = ""
+			if p["country"] != nil && p["country"].(string) != "" {
+				country = p["country"].(string)
+			}
+
+			if p["prov"] != nil && p["prov"].(string) != "" {
+				prov = p["prov"].(string)
+			}
+
+			if p["pro"] != nil && p["pro"].(string) != "" {
+				prov = p["pro"].(string)
+			}
+
+			if p["regionName"] != nil && p["regionName"].(string) != "" {
+				prov = p["regionName"].(string)
+			}
+
+			if p["city"] != nil && p["city"].(string) != "" {
+				city = p["city"].(string)
+			}
+			//return p["country"].(string) + "-" + p["prov"].(string) + "-" + p["city"].(string)
+			return country + "-" + prov + "-" + city
 		}
 	}
 	return ""

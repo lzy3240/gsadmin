@@ -20,7 +20,7 @@ type SysRoleAddForm struct {
 	ControlForm
 	RoleName  string `json:"role_name" form:"role_name" binding:"required" zh:"权限名称"`
 	Detail    string `json:"detail" form:"detail"`
-	Status    int    `json:"status" form:"status"`
+	Status    string `json:"status" form:"status"`
 	NodesData string `json:"nodes_data" form:"nodes_data"`
 }
 

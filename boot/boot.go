@@ -24,12 +24,18 @@ func InitServer() { //staticFs, templateFs embed.FS
 		fmt.Println("init trans failed, err:", err)
 	}
 
+	//初始化配置文件
 	config.InitConfig("./config.toml")
+	//初始化日志
 	log.InitLog()
+	//初始化数据库
 	db.InitConn()
 	database.InitTables()
+
+	//初始化消息队列
 	registerQueue()
 
+	//初始化路由
 	r := initRouter() //staticFs, templateFs
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", config.Instance().App.HttpPort),
@@ -39,14 +45,16 @@ func InitServer() { //staticFs, templateFs embed.FS
 		MaxHeaderBytes: 1 << 20,
 	}
 
+	//欢迎
 	usage()
+	//启动服务
 	go func() {
 		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Instance().Error(err.Error())
 			os.Exit(0)
 		}
 	}()
-
+	//退出
 	shutDown(s)
 }
 

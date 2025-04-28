@@ -13,7 +13,7 @@ type SysOperLog struct {
 	OperUrl       string `json:"oper_url"`
 	OperIp        string `json:"oper_ip"`
 	OperLocation  string `json:"oper_location"`
-	OperParam     string `json:"oper_param"`
+	OperParam     string `json:"oper_param" gorm:"type:longtext;"`
 	Status        int    `json:"status"`
 	JsonResult    string `json:"json_result"`
 	ErrorMsg      string `json:"error_msg"`

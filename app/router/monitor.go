@@ -5,7 +5,7 @@ import (
 	"gsadmin/middleware"
 )
 
-func MonitorRouter(r *gin.Engine) {
+func monitorRouter(r *gin.Engine) {
 	tr := r.Group("monitor")
 	tr.Use(middleware.Auth())
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <widget-calendar></widget-calendar>
+</div>
+	<div id="test"></div>
+</div>
+<script src="calendar.min.js"></script>
+<script src="widget-calendar.min.js"></script>
+
+<script>
+    document.querySelector('widget-calendar').addEventListener('onSelect',function(event){
+        let data = event.detail;
+        document.getElementById('test').innerText=`onSelect：${data['sYear']}-${data['sMonth']}-${data['sDay']}`;
+    });
+
+    document.querySelector('widget-calendar').addEventListener('onChange',function(event){
+        let data = event.detail;
+        document.getElementById('test').innerText=`onChange：${data['sYear']}-${data['sMonth']}-${data['sDay']}`;
+    });
+
+    document.querySelector('widget-calendar').addEventListener('onInit',function(event){
+        let data = event.detail;
+        document.getElementById('test').innerText=`onInit：${data['sYear']}-${data['sMonth']}-${data['sDay']}`;
+    });
+</script>
+</body>
+</html>

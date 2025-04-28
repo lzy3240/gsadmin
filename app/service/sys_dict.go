@@ -33,7 +33,7 @@ func (s *SysDict) DictTypeListJson(req *dto.DictTypeListForm) (list []model.SysD
 func (s *SysDict) GetDictTypeByID(req *dto.DictTypeIDForm) (data model.SysDictType, err error) {
 	err = db.Instance().Model(model.SysDictType{}).Where("id = ?", req.ID).First(&data).Error
 	if err != nil {
-		log.Instance().Error("SysDictSerice.GetDictTypeByID:" + err.Error())
+		log.Instance().Error("SysDictService.GetDictTypeByID:" + err.Error())
 		return model.SysDictType{}, err
 	}
 	return data, nil

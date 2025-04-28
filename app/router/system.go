@@ -5,7 +5,7 @@ import (
 	"gsadmin/middleware"
 )
 
-func SystemRouter(r *gin.Engine) {
+func systemRouter(r *gin.Engine) {
 	sr := r.Group("system")
 
 	// default
@@ -20,10 +20,11 @@ func SystemRouter(r *gin.Engine) {
 	// index
 	sr.GET("/", base.IndexPage)     //Index页面
 	sr.GET("index", base.IndexPage) //Index页面
-	sr.GET("main", base.FramePage)  //Frame页面
+	sr.GET("main", base.MainPage)   //Main页面
 
 	// upload
 	sr.POST("upload", base.Upload)
+	sr.GET("uploadFile", base.UploadFile)
 
 	// log
 	sr.GET("log/list", slog.LogListPage)

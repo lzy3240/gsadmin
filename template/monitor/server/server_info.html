@@ -78,9 +78,9 @@
             <ul class="list">
                 <li  class="list-item"><span class="monitor-span-title" > 属性 </span><span class="monitor-span-footer"> 值 </span></li>
                 <hr>
-                <li  class="list-item"><span class="monitor-span-title" > 应用版本 </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.SdkVersion }} </span></li>
+                <li  class="list-item"><span class="monitor-span-title" > 应用版本 </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.AppVersion }} </span></li>
                 <hr>
-                <li  class="list-item"><span class="monitor-span-title" > 应用JDK </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.AppVersion }} </span></li>
+                <li  class="list-item"><span class="monitor-span-title" > 应用JDK </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.SdkVersion }} </span></li>
                 <hr>
                 <li  class="list-item"><span class="monitor-span-title" > 应用路径 </span><span class="monitor-span-footer"> {{ .server_info.RunInfo.Path }} </span></li>
                 <hr>
@@ -113,24 +113,24 @@
         <div class="layui-card-body">
             <ul class="list">
                 <li  class="list-item">
-                    <span class="monitor-span-other" > 路径 </span>
+                    <span class="monitor-span-other" style="width: 15%"> 设备 </span>
+                    <span class="monitor-span-other" style="width: 15%"> 路径 </span>
+                    <span class="monitor-span-other" style="width: 15%"> 文件系统 </span>
                     <span class="monitor-span-other" > 磁盘空间 </span>
                     <span class="monitor-span-other" > 剩余空间 </span>
                     <span class="monitor-span-other" > 已用空间 </span>
                     <span class="monitor-span-other" > 使用率 </span>
-                    <span class="monitor-span-other" style="width: 15%"> 读字节 </span>
-                    <span class="monitor-span-other" style="width: 15%"> 写字节 </span>
                 </li>
                 <hr>
                 {{range $k,$v := .server_info.DiskInfo}}
                     <li  class="list-item">
-                        <span class="monitor-span-other" > {{ $v.Path }} </span>
+                        <span class="monitor-span-other" style="width: 15%"> {{ $v.Device }} </span>
+                        <span class="monitor-span-other" style="width: 15%"> {{ $v.Path }} </span>
+                        <span class="monitor-span-other" style="width: 15%"> {{ $v.FsType }} </span>
                         <span class="monitor-span-other" > {{ $v.TotalCap }} </span>
                         <span class="monitor-span-other" > {{ $v.FreeCap }} </span>
                         <span class="monitor-span-other" > {{ $v.UsedCap }} </span>
-                        <span class="monitor-span-other" > {{ $v.UsedPercent }} </span>
-                        <span class="monitor-span-other" style="width: 15%"> {{ $v.ReadBytes }} </span>
-                        <span class="monitor-span-other" style="width: 15%"> {{ $v.WriteBytes }} </span>
+                        <span class="monitor-span-other" > {{ $v.UsedPercent }} %</span>
                     </li>
                     <hr>
                 {{end}}

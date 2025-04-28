@@ -75,7 +75,7 @@ func (s *SysRole) Insert(req *dto.SysRoleAddForm) error {
 	role.Detail = req.Detail
 	role.CreateId = req.CreateId
 	role.UpdateId = req.UpdateId
-	role.Status = req.Status
+	role.Status = assertion.AnyToInt(req.Status)
 
 	err = db.Instance().Create(&role).Error
 	if err != nil {

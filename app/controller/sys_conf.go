@@ -13,6 +13,8 @@ type SysConf struct {
 	baseapi.Api
 }
 
+// ----------------------------后台-----------------------------
+
 func (a SysConf) SiteEditPage(c *gin.Context) {
 	a.MountCtx(c)
 	svice := service.SysConf{}

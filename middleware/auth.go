@@ -35,6 +35,10 @@ func Auth() func(c *gin.Context) {
 	}
 }
 
+func CheckIndexPage(c *gin.Context) {
+	c.Redirect(http.StatusFound, "/home")
+}
+
 func CheckLoginPage(c *gin.Context) {
 	if isSignedIn(c) == true {
 		c.Redirect(http.StatusFound, "/system/index")
