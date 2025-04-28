@@ -54,7 +54,7 @@ func GetCityByIp(ip string) string {
 				city = p["city"].(string)
 			}
 			//return p["country"].(string) + "-" + p["prov"].(string) + "-" + p["city"].(string)
-			return country + "-" + prov + "-" + city
+			return country + " " + prov + " " + city
 		}
 	}
 	return ""
