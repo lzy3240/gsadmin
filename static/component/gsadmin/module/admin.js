@@ -23,7 +23,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 		var body = $('body');
 
-		var gsadminAdmin = new function() {
+		var gsadmin = new function() {
 
 			// 默认配置
 			var configType = 'yml';
@@ -50,7 +50,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				if (initConfig !== undefined) {
 					applyConfig(initConfig);
 				} else {
-					applyConfig(gsadminAdmin.readConfig());
+					applyConfig(gsadmin.readConfig());
 				}
 			}
 
@@ -226,10 +226,10 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.menuSkin = function(theme) {
-				var gsadminAdmin = $(".gsadmin-admin");
-				gsadminAdmin.removeClass("light-theme");
-				gsadminAdmin.removeClass("dark-theme");
-				gsadminAdmin.addClass(theme);
+				var gsadmin = $(".gsadmin-admin");
+				gsadmin.removeClass("light-theme");
+				gsadmin.removeClass("dark-theme");
+				gsadmin.addClass(theme);
 			}
 
 			this.logout = function(callback) {
@@ -436,7 +436,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			$('[data-select-bgcolor]').removeClass("layui-this");
 			$(this).addClass("layui-this");
 			localStorage.setItem("theme-menu", theme);
-			gsadminAdmin.menuSkin(theme);
+			gsadmin.menuSkin(theme);
 		});
 
 		body.on('click', '.select-color-item', function() {
@@ -451,13 +451,13 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 		function applyConfig(param) {
 			config = param;
-			gsadminAdmin.logoRender(param);
-			gsadminAdmin.menuRender(param);
-			gsadminAdmin.bodyRender(param);
-			gsadminAdmin.themeRender(param);
-			gsadminAdmin.keepLoad(param);
+			gsadmin.logoRender(param);
+			gsadmin.menuRender(param);
+			gsadmin.bodyRender(param);
+			gsadmin.themeRender(param);
+			gsadmin.keepLoad(param);
 			if (param.header.message != false) {
-				gsadminAdmin.messageRender(param);
+				gsadmin.messageRender(param);
 			}
 		}
 
@@ -552,5 +552,5 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 		}
 
-		exports(MOD_NAME, gsadminAdmin);
+		exports(MOD_NAME, gsadmin);
 	})
