@@ -56,13 +56,13 @@ body,
 	font-size: 21px;
 	font-weight: 550;
 	color: #5FB878;
-	position: relative;
+	/*position: relative;*/
 	top: 5px;
 	margin-left: 5px;
 }
 
 .gsadmin-admin .layui-logo .logo {
-	display: none;
+	/*display: none;*/
 }
 
 .gsadmin-admin .layui-side {
