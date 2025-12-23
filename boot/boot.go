@@ -8,7 +8,7 @@ import (
 	"gsadmin/core/log"
 	"gsadmin/core/queue"
 	"gsadmin/core/utils/assertion"
-	"gsadmin/core/utils/validate"
+	"gsadmin/core/utils/translator"
 	"gsadmin/database"
 	"gsadmin/global/e"
 	"gsadmin/middleware"
@@ -20,9 +20,8 @@ import (
 )
 
 func InitServer() { //staticFs, templateFs embed.FS
-	if err := validate.InitTrans("zh"); err != nil {
-		fmt.Println("init trans failed, err:", err)
-	}
+	//初始化翻译器
+	_ = translator.InitTrans("zh")
 
 	//初始化配置文件
 	config.InitConfig("./config.toml")
@@ -45,7 +44,7 @@ func InitServer() { //staticFs, templateFs embed.FS
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	//欢迎
+	//欢迎语
 	usage()
 	//启动服务
 	go func() {

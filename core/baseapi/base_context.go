@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"gsadmin/core/baseapi/constructor"
-	"gsadmin/core/utils/validate"
+	"gsadmin/core/utils/translator"
 )
 
 type Api struct {
@@ -62,5 +62,5 @@ func (a *Api) Bind(d interface{}, bindings ...binding.Binding) error {
 
 // TransErr 转换中文错误
 func (a *Api) TransErr(err error) string {
-	return validate.GetValidateError(err)
+	return translator.GetValidateError(err)
 }
