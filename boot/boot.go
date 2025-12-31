@@ -30,7 +30,6 @@ func InitServer() { //staticFs, templateFs embed.FS
 	//初始化数据库
 	db.InitConn()
 	database.InitTables()
-
 	//初始化消息队列
 	registerQueue()
 

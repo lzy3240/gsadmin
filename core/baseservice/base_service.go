@@ -73,7 +73,7 @@ func (s *Service) SetCondition(q interface{}) func(db *gorm.DB) *gorm.DB {
 //	}
 //}
 
-// gorm更新方法updates忽略零值, 故对象转换为map更新
+// StructToMapByTag gorm更新方法updates忽略零值, 故对象转换为map更新
 func (s *Service) StructToMapByTag(obj interface{}, tagName string) map[string]interface{} {
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
