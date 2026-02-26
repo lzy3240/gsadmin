@@ -19,6 +19,9 @@ type Api struct {
 
 // Bind 参数校验
 func (a *Api) Bind(c *gin.Context, d interface{}, bindings ...binding.Binding) error {
+	if a.c == nil {
+		a.c = c
+	}
 	var err error
 	if len(bindings) == 0 {
 		bindings = constructor.Constructor.GetBindingForGin(d)
@@ -54,7 +57,9 @@ func (a *Api) Success(c *gin.Context, msg string) *Api {
 		Code: e.SUCCESS,
 		Msg:  msg,
 	}
-	a.c = c
+	if a.c == nil {
+		a.c = c
+	}
 	return a
 }
 
@@ -72,7 +77,9 @@ func (a *Api) Error(c *gin.Context, msg string, err error) *Api {
 		Code: e.ERROR,
 		Msg:  msg,
 	}
-	a.c = c
+	if a.c == nil {
+		a.c = c
+	}
 	return a
 }
 
@@ -85,7 +92,9 @@ func (a *Api) Forbidden(c *gin.Context, msg string) *Api {
 		Code: e.FORBIDDEN,
 		Msg:  msg,
 	}
-	a.c = c
+	if a.c == nil {
+		a.c = c
+	}
 	return a
 }
 
@@ -98,7 +107,9 @@ func (a *Api) Unauthorized(c *gin.Context, msg string) *Api {
 		Code: e.UNAUTHORIZED,
 		Msg:  msg,
 	}
-	a.c = c
+	if a.c == nil {
+		a.c = c
+	}
 	return a
 }
 
@@ -108,15 +119,17 @@ func (a *Api) Custom(c *gin.Context, code int, msg string) *Api {
 		Code: code,
 		Msg:  msg,
 	}
-	a.c = c
+	if a.c == nil {
+		a.c = c
+	}
 	return a
 }
 
 // SetMsg 设置消息体的内容
-func (a *Api) SetMsg(msg string) *Api {
-	a.r.Msg = msg
-	return a
-}
+//func (a *Api) SetMsg(msg string) *Api {
+//	a.r.Msg = msg
+//	return a
+//}
 
 // SetCode 设置消息体的编码
 //func (a *Api) SetCode(code int) *Api {

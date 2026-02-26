@@ -6,6 +6,7 @@ import (
 	"gsadmin/app/service"
 	"gsadmin/app/service/dto"
 	"gsadmin/core/baseapi"
+	"gsadmin/global/e"
 )
 
 type SysLog struct {
@@ -31,7 +32,7 @@ func (a SysLog) LogLogin(c *gin.Context) {
 		return
 	}
 
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysLog) LogOperate(c *gin.Context) {
@@ -48,5 +49,5 @@ func (a SysLog) LogOperate(c *gin.Context) {
 		return
 	}
 
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }

@@ -78,7 +78,7 @@ func systemRouter(r *gin.Engine) {
 	sr.GET("auth/nodes", auth.AuthNodes)    // 权限配置
 	sr.GET("auth/add", auth.AddNodePage)    // 新增权限页面
 	sr.GET("auth/edit", auth.AuthEditPage)  // 修改权限页面
-	sr.POST("auth/edit", auth.AuthEdit)     // 新增、修改权限
+	sr.POST("auth/edit", auth.AuthSave)     // 保存权限, 兼容新增、修改
 	sr.POST("auth/node", auth.AuthNode)     // 权限配置列表页
 	sr.POST("auth/delete", auth.AuthDelete) // 权限配置列表页
 	sr.GET("auth/parent", auth.Parent)      // 权限列表
@@ -96,9 +96,9 @@ func systemRouter(r *gin.Engine) {
 	sr.GET("dict/type/json", dict.DictTypeJson)
 	sr.POST("dict/type/status", dict.DictTypeStatus)
 	sr.GET("dict/type/add", dict.DictTypeAddPage)
-	//sr.POST("dict/type/add", dict.DictTypeEdit)
+	//sr.POST("dict/type/add", dict.DictTypeSave)
 	sr.GET("dict/type/edit", dict.DictTypeEditPage)
-	sr.POST("dict/type/edit", dict.DictTypeEdit)
+	sr.POST("dict/type/edit", dict.DictTypeSave) // 保存字典类型, 兼容新增、修改
 	sr.POST("dict/type/delete", dict.DictTypeDelete)
 
 	// dict data字典设置
@@ -108,6 +108,6 @@ func systemRouter(r *gin.Engine) {
 	sr.GET("dict/data/add", dict.DictDataAddPage)
 	//sr.POST("dict/data/add", dict.DictDataAdd)
 	sr.GET("dict/data/edit", dict.DictDataEditPage)
-	sr.POST("dict/data/edit", dict.DictDataEdit)
+	sr.POST("dict/data/edit", dict.DictDataSave) // 保存字典数据, 兼容新增、修改
 	sr.POST("dict/data/delete", dict.DictDataDelete)
 }

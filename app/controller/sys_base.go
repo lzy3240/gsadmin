@@ -177,7 +177,7 @@ func (a SysBase) CaptchaVerify(c *gin.Context) {
 	if captcha.CaptVerify(req.ID, strings.ToLower(req.Capt)) == true {
 		a.Success(c, "验证码正确").WriteJsonExit()
 	} else {
-		a.Error(c, "验证码有误", nil).WriteJsonExit()
+		a.Error(c, "验证码错误", nil).WriteJsonExit()
 	}
 	return
 }
@@ -205,7 +205,7 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 
 	isLock := base.CheckLock(req.UserName)
 	if isLock {
-		a.Error(c, "账户已锁定", nil).SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+		a.Error(c, "账号已锁定, 请稍后再试", nil).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 		return
 	}
 	userAgent := c.Request.Header.Get("User-Agent")
@@ -235,16 +235,16 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 			return
 		}
 		if having > 0 {
-			a.Error(c, "密码错误", nil).SetMsg("账号或密码不正确,还有"+assertion.AnyToString(having)+"次之后账号将锁定").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "密码错误,剩余错误次数为:"+assertion.AnyToString(having), nil).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		} else {
-			a.Error(c, "账户已锁定", nil).SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "账户已锁定, 请稍后再试", nil).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 	} else {
 		userID, err := a.SetUserToSession(c, user)
 		if err != nil {
-			a.Error(c, "用户信息处理失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "用户会话处理失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 		var online model.SysUserOnline
@@ -271,7 +271,7 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 			a.Error(c, "用户登录日志失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
-		a.Success(c, "操作成功").SetMsg("登陆成功").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+		a.Success(c, "登陆成功").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 	}
 }
 
@@ -286,9 +286,9 @@ func (a SysBase) Logout(c *gin.Context) {
 		//删除session
 		_ = a.DelUserFromSession(c, *operUser)
 	}
-	a.Success(c, "操作成功").WriteRedirect("/login")
+	a.Success(c, "退出成功").WriteRedirect("/login")
 }
 
 func (a SysBase) NotFoundPage(c *gin.Context) {
-	a.Success(c, "操作成功").WriteHtmlExit("not_found.html", gin.H{})
+	a.Success(c, "页面不存在").WriteHtmlExit("not_found.html", gin.H{})
 }

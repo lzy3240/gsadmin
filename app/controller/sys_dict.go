@@ -33,7 +33,7 @@ func (a SysDict) DictTypeJson(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysDict) DictTypeStatus(c *gin.Context) {
@@ -50,7 +50,7 @@ func (a SysDict) DictTypeStatus(c *gin.Context) {
 		a.Error(c, "更新失败", err).SetLogTag(e.OperEdit, e.DictTypeEdit).WriteJsonExit()
 		return
 	}
-	a.Success(c, "更新成功").SetMsg("更新成功").SetLogTag(e.OperEdit, e.DictTypeEdit).WriteJsonExit()
+	a.Success(c, "更新成功").SetLogTag(e.OperEdit, e.DictTypeEdit).WriteJsonExit()
 }
 
 func (a SysDict) DictTypeAddPage(c *gin.Context) {
@@ -75,8 +75,8 @@ func (a SysDict) DictTypeEditPage(c *gin.Context) {
 	a.Success(c, "查询成功").SetLogTag(e.OperEdit, e.DictTypeEdit).WriteHtmlExit("dict_type_edit.html", gin.H{"dictType": data})
 }
 
-// DictTypeEdit 兼容新增和修改字典类型
-func (a SysDict) DictTypeEdit(c *gin.Context) {
+// DictTypeSave 兼容新增和修改字典类型
+func (a SysDict) DictTypeSave(c *gin.Context) {
 	dictSvice := service.SysDict{}
 	user := a.GetUserFromSession(c)
 
@@ -143,7 +143,7 @@ func (a SysDict) DictDataListPage(c *gin.Context) {
 	}
 
 	// 传递字典类型
-	a.Success(c, "操作成功").WriteHtmlExit("dict_data_list.html", gin.H{"data_type": req.DictType})
+	a.Success(c, "查询成功").WriteHtmlExit("dict_data_list.html", gin.H{"data_type": req.DictType})
 }
 
 func (a SysDict) DictDataJson(c *gin.Context) {
@@ -160,7 +160,7 @@ func (a SysDict) DictDataJson(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysDict) DictDataAddPage(c *gin.Context) {
@@ -171,7 +171,7 @@ func (a SysDict) DictDataAddPage(c *gin.Context) {
 		return
 	}
 	// 传递字典类型
-	a.Success(c, "操作成功").SetLogTag(e.OperAdd, e.DictDataAdd).WriteHtmlExit("dict_data_add.html", gin.H{"data_type": req.DictType})
+	a.Success(c, "查询成功").SetLogTag(e.OperAdd, e.DictDataAdd).WriteHtmlExit("dict_data_add.html", gin.H{"data_type": req.DictType})
 }
 
 func (a SysDict) DictDataEditPage(c *gin.Context) {
@@ -187,10 +187,10 @@ func (a SysDict) DictDataEditPage(c *gin.Context) {
 		a.Error(c, "查询失败", err).SetLogTag(e.OperEdit, e.DictDataEdit).WriteJsonExit()
 		return
 	}
-	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.DictDataEdit).WriteHtmlExit("dict_data_edit.html", gin.H{"dictData": data})
+	a.Success(c, "查询成功").SetLogTag(e.OperEdit, e.DictDataEdit).WriteHtmlExit("dict_data_edit.html", gin.H{"dictData": data})
 }
 
-func (a SysDict) DictDataEdit(c *gin.Context) {
+func (a SysDict) DictDataSave(c *gin.Context) {
 	dictSvice := service.SysDict{}
 	req := dto.DictDataEditForm{}
 	err := a.Bind(c, &req, binding.Form)

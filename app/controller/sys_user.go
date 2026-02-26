@@ -33,7 +33,7 @@ func (a SysUser) UserAddPage(c *gin.Context) {
 			Status:   v.Status,
 		})
 	}
-	a.Success(c, "操作成功").SetLogTag(e.OperAdd, e.UserAdd).WriteHtmlExit("user_add.html", gin.H{"role": rolesShow})
+	a.Success(c, "查询成功").SetLogTag(e.OperAdd, e.UserAdd).WriteHtmlExit("user_add.html", gin.H{"role": rolesShow})
 }
 
 func (a SysUser) UserAdd(c *gin.Context) {
@@ -148,7 +148,7 @@ func (a SysUser) UserJson(c *gin.Context) {
 		return
 	}
 
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysUser) UserDelete(c *gin.Context) {
@@ -190,7 +190,7 @@ func (a SysUser) UserBatchDelete(c *gin.Context) {
 	}
 
 	if err != nil {
-		a.Error(c, "删除失败", err).SetMsg("部分删除失败, id: "+strings.Join(failedIds, ",")).SetLogTag(e.OperDel, e.UserDelete).WriteJsonExit()
+		a.Error(c, "部分删除失败, ids: "+strings.Join(failedIds, ","), err).SetLogTag(e.OperDel, e.UserDelete).WriteJsonExit()
 		return
 	}
 	a.Success(c, "删除成功").SetLogTag(e.OperDel, e.UserDelete).WriteJsonExit()
@@ -258,7 +258,7 @@ func (a SysUser) AvatarEdit(c *gin.Context) {
 	//更新session
 	operUser.Avatar = req.Avatar
 	_, _ = a.SetUserToSession(c, *operUser)
-	a.Success(c, "更新成功").SetMsg(req.Avatar).SetLogTag(e.OperEdit, e.AvatarEdit).WriteJsonExit()
+	a.Success(c, "更新成功: "+req.Avatar).SetLogTag(e.OperEdit, e.AvatarEdit).WriteJsonExit()
 }
 
 func (a SysUser) PwdEditPage(c *gin.Context) {

@@ -25,7 +25,9 @@ const (
 	ERROR        = 500 //错误
 	UNAUTHORIZED = 401 //鉴权失败
 	FORBIDDEN    = 403 //无操作权限
-	FAIL         = -1  //失败
+	NOTFOUND     = 404
+	ZERO         = 0
+	FAIL         = -1 //失败
 
 	// 消息主题
 	TopicOperLog = "oper_log"

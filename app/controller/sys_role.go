@@ -31,7 +31,7 @@ func (a SysRole) RoleJson(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysRole) RoleAddPage(c *gin.Context) {
@@ -86,7 +86,7 @@ func (a SysRole) GetRolePower(c *gin.Context) {
 	}
 
 	data := authService.FindAuthPower(assertion.AnyToInt(req.RoleId))
-	a.Success(c, "操作成功").WriteCustomJsonExit(data)
+	a.Success(c, "查询成功").WriteCustomJsonExit(data)
 }
 
 func (a SysRole) SaveRolePower(c *gin.Context) {
@@ -101,10 +101,10 @@ func (a SysRole) SaveRolePower(c *gin.Context) {
 
 	err = roleSvice.InsertRoleAuth(&req)
 	if err != nil {
-		a.Error(c, "保存失败", err).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
+		a.Error(c, "新增失败", err).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
 		return
 	}
-	a.Success(c, "保存成功").SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
+	a.Success(c, "新增成功").SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
 }
 
 func (a SysRole) RoleEditPage(c *gin.Context) {

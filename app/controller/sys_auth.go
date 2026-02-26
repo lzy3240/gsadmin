@@ -25,7 +25,7 @@ func (a SysAuth) AuthEditPage(c *gin.Context) {
 	var req dto.SysAuthIDForm
 	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.Error(c, "参数错误", err).SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteStringExit("%s", err.Error())
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteStringExit("%s", err.Error())
 		return
 	}
 
@@ -39,8 +39,8 @@ func (a SysAuth) AuthEditPage(c *gin.Context) {
 	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteHtmlExit("auth_edit.html", gin.H{"parents": firstAuths, "seconds": secondAuths, "auth": res})
 }
 
-// AuthEdit 修改接口/新增接口
-func (a SysAuth) AuthEdit(c *gin.Context) {
+// AuthSave 修改接口/新增接口
+func (a SysAuth) AuthSave(c *gin.Context) {
 	authService := service.SysAuth{}
 	user := a.GetUserFromSession(c)
 
@@ -49,7 +49,7 @@ func (a SysAuth) AuthEdit(c *gin.Context) {
 	//var req dto.SysAuthNodeForm
 	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.Error(c, "参数错误", err).SetLogTag(e.OperOther, e.AuthNodeEdit).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperOther, e.AuthNodeEdit).WriteJsonExit()
 		return
 	}
 
@@ -60,7 +60,7 @@ func (a SysAuth) AuthEdit(c *gin.Context) {
 			return
 		}
 		_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(a.GetUidFromSession(c))) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
-		a.Success(c, "操作成功").SetLogTag(e.OperAdd, e.AuthNodeAdd).WriteJsonExit()
+		a.Success(c, "新增成功").SetLogTag(e.OperAdd, e.AuthNodeAdd).WriteJsonExit()
 	} else { //执行edit
 		req.SetUpdate(user.ID)
 		if err = authService.Update(req); err != nil {
@@ -68,7 +68,7 @@ func (a SysAuth) AuthEdit(c *gin.Context) {
 			return
 		}
 		_ = cache.Instance().Del(e.UserMenu, e.MenuCache+assertion.AnyToString(a.GetUidFromSession(c))) // 删除栏目列表缓存，重新进行设置service.GetUid(c)
-		a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteJsonExit()
+		a.Success(c, "修改成功").SetLogTag(e.OperEdit, e.AuthNodeEdit).WriteJsonExit()
 	}
 }
 
@@ -77,7 +77,7 @@ func (a SysAuth) AuthDelete(c *gin.Context) {
 	req := dto.SysAuthIDForm{}
 	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.Error(c, "参数错误", err).SetLogTag(e.OperDel, e.AuthDelete).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperDel, e.AuthDelete).WriteJsonExit()
 		return
 	}
 
@@ -94,7 +94,7 @@ func (a SysAuth) AuthNode(c *gin.Context) {
 	req := dto.SysAuthIDForm{}
 	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.Error(c, "参数错误", err).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 		return
 	}
 
@@ -103,7 +103,7 @@ func (a SysAuth) AuthNode(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Success(c, "操作成功").SetData(data).WriteJsonExit()
+	a.Success(c, "查询成功").SetData(data).WriteJsonExit()
 }
 
 func (a SysAuth) AuthNodes(c *gin.Context) {

@@ -22,7 +22,7 @@ func (a SysConf) SiteEditPage(c *gin.Context) {
 		a.Error(c, "获取系统配置失败", err).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 		return
 	}
-	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteHtmlExit("site_config.html", gin.H{"site": site})
+	a.Success(c, "查询成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteHtmlExit("site_config.html", gin.H{"site": site})
 }
 
 func (a SysConf) SiteEdit(c *gin.Context) {
@@ -39,7 +39,7 @@ func (a SysConf) SiteEdit(c *gin.Context) {
 		a.Error(c, "修改系统配置失败", err).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 		return
 	}
-	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
+	a.Success(c, "修改成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 }
 
 func (a SysConf) BaseEditPage(c *gin.Context) {

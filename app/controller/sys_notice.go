@@ -65,7 +65,7 @@ func (a SysNotice) NoticeJson(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysNotice) NoticeUnReadJson(c *gin.Context) {
@@ -76,7 +76,7 @@ func (a SysNotice) NoticeUnReadJson(c *gin.Context) {
 		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
+	a.Custom(c, e.ZERO, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysNotice) NoticeEditPage(c *gin.Context) {
