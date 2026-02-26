@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"gsadmin/core/utils/file"
+	"gsadmin/utils/file"
 	"io/ioutil"
 	"log"
 )
@@ -40,7 +40,6 @@ type AppConf struct {
 }
 
 type DBConf struct {
-	DBType string
 	DBUser string
 	DBPwd  string
 	DBHost string

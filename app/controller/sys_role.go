@@ -6,8 +6,8 @@ import (
 	"gsadmin/app/service"
 	"gsadmin/app/service/dto"
 	"gsadmin/core/baseapi"
-	"gsadmin/core/utils/assertion"
 	"gsadmin/global/e"
+	"gsadmin/utils/assertion"
 )
 
 type SysRole struct {
@@ -15,35 +15,35 @@ type SysRole struct {
 }
 
 func (a SysRole) RoleListPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("role_list.html", gin.H{})
+	a.Success(c, "操作成功").WriteHtmlExit("role_list.html", gin.H{})
 }
 
 func (a SysRole) RoleJson(c *gin.Context) {
 	roleSvice := service.SysRole{}
 	req := dto.SysRoleListForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 	}
 
 	list, count, err := roleSvice.List(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetCode(0).SetCount(count).SetData(list).WriteJsonExit()
+	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysRole) RoleAddPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().SetLogTag(e.OperAdd, e.RoleAdd).WriteHtmlExit("role_add.html", gin.H{})
+	a.Success(c, "操作成功").SetLogTag(e.OperAdd, e.RoleAdd).WriteHtmlExit("role_add.html", gin.H{})
 }
 
 func (a SysRole) RoleAdd(c *gin.Context) {
-	user := a.MountCtx(c).GetUserFromSession()
+	user := a.GetUserFromSession(c)
 
 	req := dto.SysRoleAddForm{}
-	if err := a.Bind(&req, binding.Form); err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
+	if err := a.Bind(c, &req, binding.Form); err != nil {
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
 		return
 	}
 
@@ -56,42 +56,44 @@ func (a SysRole) RoleAdd(c *gin.Context) {
 	req.SetCreate(user.ID)
 	roleSvice := service.SysRole{}
 	if err := roleSvice.Insert(&req); err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
+		a.Error(c, "新增失败", err).SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
+	a.Success(c, "新增成功").SetLogTag(e.OperAdd, e.RoleAdd).WriteJsonExit()
 }
 
 func (a SysRole) RolePowerPage(c *gin.Context) {
 	req := dto.SysRolePowerIDForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.SuccessResp().WriteCustomJsonExit(nil)
+		//a.Success().WriteCustomJsonExit(nil)
+		a.Error(c, "参数校验失败", err).WriteCustomJsonExit(nil)
 		return
 	}
 
-	a.SuccessResp().WriteHtmlExit("role_power.html", gin.H{"id": req.RoleId})
+	a.Success(c, "操作成功").WriteHtmlExit("role_power.html", gin.H{"id": req.RoleId})
 }
 
 func (a SysRole) GetRolePower(c *gin.Context) {
 	authService := service.SysAuth{}
 	req := dto.SysRolePowerIDForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.SuccessResp().WriteCustomJsonExit(nil)
+		//a.Success().WriteCustomJsonExit(nil)
+		a.Error(c, "参数校验失败", err).WriteCustomJsonExit(nil)
 		return
 	}
 
 	data := authService.FindAuthPower(assertion.AnyToInt(req.RoleId))
-	a.SuccessResp().WriteCustomJsonExit(data)
+	a.Success(c, "操作成功").WriteCustomJsonExit(data)
 }
 
 func (a SysRole) SaveRolePower(c *gin.Context) {
 	req := dto.SysRolePowerForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
 		return
 	}
 
@@ -99,37 +101,37 @@ func (a SysRole) SaveRolePower(c *gin.Context) {
 
 	err = roleSvice.InsertRoleAuth(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
+		a.Error(c, "保存失败", err).SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
+	a.Success(c, "保存成功").SetLogTag(e.OperAdd, e.RoleSave).WriteJsonExit()
 }
 
 func (a SysRole) RoleEditPage(c *gin.Context) {
 	roleSvice := service.SysRole{}
 	req := dto.SysRoleIDForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetLogTag(e.OperEdit, e.RoleEdit).WriteStringExit("%s", err.Error())
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperEdit, e.RoleEdit).WriteStringExit("%s", err.Error())
 		return
 	}
 
 	role, err := roleSvice.Get(&req)
 	if err != nil {
-		a.ErrorResp().WriteStringExit("%s", err.Error())
+		a.Error(c, "查询失败", err).WriteStringExit("%s", err.Error())
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperEdit, e.RoleEdit).WriteHtmlExit("role_edit.html", gin.H{"role": role})
+	a.Success(c, "查询成功").SetLogTag(e.OperEdit, e.RoleEdit).WriteHtmlExit("role_edit.html", gin.H{"role": role})
 }
 
 func (a SysRole) RoleEdit(c *gin.Context) {
-	user := a.MountCtx(c).GetUserFromSession()
+	user := a.GetUserFromSession(c)
 	roleSvice := service.SysRole{}
 
 	req := dto.SysRoleEditForm{}
-	err := a.Bind(&req, binding.JSON)
+	err := a.Bind(c, &req, binding.JSON)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 		return
 	}
 
@@ -143,42 +145,42 @@ func (a SysRole) RoleEdit(c *gin.Context) {
 
 	err = roleSvice.Update(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+		a.Error(c, "更新失败", err).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+	a.Success(c, "更新成功").SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 }
 
 func (a SysRole) RoleDelete(c *gin.Context) {
 	roleSvice := service.SysRole{}
 	req := dto.SysAuthIDForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
 		return
 	}
 
 	err = roleSvice.Delete(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
+		a.Error(c, "删除失败", err).SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
+	a.Success(c, "删除成功").SetLogTag(e.OperDel, e.RoleDelete).WriteJsonExit()
 }
 
 func (a SysRole) RoleStatus(c *gin.Context) {
 	roleSvice := service.SysRole{}
 	req := dto.SysRoleStatusForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 		return
 	}
 
 	err = roleSvice.UpdateRoleStatus(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+		a.Error(c, "更新失败", err).SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
+	a.Success(c, "更新成功").SetLogTag(e.OperEdit, e.RoleEdit).WriteJsonExit()
 }

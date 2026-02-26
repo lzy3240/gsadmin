@@ -1,7 +1,7 @@
 package basemodel
 
 import (
-	"gsadmin/core/utils/assertion"
+	"gsadmin/utils/assertion"
 	"time"
 )
 

@@ -1,8 +1,6 @@
 module gsadmin
 
-go 1.23.0
-
-toolchain go1.23.3
+go 1.25.5
 
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
@@ -21,7 +19,7 @@ require (
 	github.com/nutsdb/nutsdb v1.0.4
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/qustavo/dotsql v1.2.0
-	github.com/redis/go-redis/v9 v9.7.0
+	github.com/redis/go-redis/v9 v9.7.3
 	github.com/shirou/gopsutil v2.21.11+incompatible
 	github.com/spf13/viper v1.18.2
 	go.uber.org/zap v1.27.0
@@ -70,7 +68,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nyaruka/phonenumbers v1.0.55 // indirect
+	github.com/nyaruka/phonenumbers v1.2.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quasoft/memstore v0.0.0-20191010062613-2bce066d2b0b // indirect

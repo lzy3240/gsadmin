@@ -7,10 +7,10 @@ import (
 	"gsadmin/app/service"
 	"gsadmin/app/service/dto"
 	"gsadmin/core/cache"
-	"gsadmin/core/utils/assertion"
-	"gsadmin/core/utils/session"
-	"gsadmin/core/utils/str"
 	"gsadmin/global/e"
+	"gsadmin/utils/assertion"
+	"gsadmin/utils/session"
+	"gsadmin/utils/str"
 	"net/http"
 	"strings"
 )
@@ -61,11 +61,11 @@ func isSignedIn(c *gin.Context) bool {
 func authByPage(c *gin.Context) bool {
 	userSvice := service.SysUser{}
 	//获取用户信息
-	tmp := session.Get(c, e.UserInfo)
+	userInfo := session.Get(c, e.UserInfo)
 
 	//类型转换
 	user := new(model.SysUser)
-	if s, ok := tmp.(string); ok {
+	if s, ok := userInfo.(string); ok {
 		_ = json.Unmarshal([]byte(s), &user)
 	}
 

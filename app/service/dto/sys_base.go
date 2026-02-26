@@ -1,6 +1,8 @@
 package dto
 
-import "gsadmin/core/utils/assertion"
+import (
+	"gsadmin/utils/assertion"
+)
 
 //Form: 提交表单
 //Resp: 响应表单

@@ -41,11 +41,11 @@ package captcha
 //		session.Delete("captcha")
 //		_ = session.Save()
 //		if captcha.VerifyString(captchaId.(string), code) {
-//			resp.SuccessResp(c).WriteJsonExit()
+//			resp.Success(c).WriteJsonExit()
 //		} else {
-//			resp.ErrorResp(c).WriteJsonExit()
+//			resp.Error(c).WriteJsonExit()
 //		}
 //	} else {
-//		resp.ErrorResp(c).WriteJsonExit()
+//		resp.Error(c).WriteJsonExit()
 //	}
 //}

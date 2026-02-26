@@ -2,7 +2,7 @@ package pagination
 
 import (
 	"fmt"
-	"gsadmin/core/utils/assertion"
+	"gsadmin/utils/assertion"
 	"html/template"
 	"math"
 	"net/http"

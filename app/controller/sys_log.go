@@ -13,40 +13,40 @@ type SysLog struct {
 }
 
 func (a SysLog) LogListPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("log_list.html", gin.H{})
+	a.Success(c, "操作成功").WriteHtmlExit("log_list.html", gin.H{})
 }
 
 func (a SysLog) LogLogin(c *gin.Context) {
 	req := dto.SysLoginLogForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 		return
 	}
 	svice := service.SysLog{}
 
 	list, count, err := svice.LoginLogList(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().SetCode(0).SetCount(count).SetData(list).WriteJsonExit()
+	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
 }
 
 func (a SysLog) LogOperate(c *gin.Context) {
 	req := dto.SysOperLogForm{}
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 		return
 	}
 	svice := service.SysLog{}
 	list, count, err := svice.OperLogList(&req)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "查询失败", err).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().SetCode(0).SetCount(count).SetData(list).WriteJsonExit()
+	a.Custom(c, 0, "查询成功").SetPageData(count, list).WriteJsonExit()
 }

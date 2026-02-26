@@ -6,18 +6,18 @@ import (
 )
 
 var (
-	base     = controller.SysBase{}
-	auth     = controller.SysAuth{}
-	conf     = controller.SysConf{}
-	dict     = controller.SysDict{}
-	slog     = controller.SysLog{}
-	notice   = controller.SysNotice{}
-	role     = controller.SysRole{}
-	user     = controller.SysUser{}
-	monitor  = controller.SysMonitor{}
+	base    = controller.SysBase{}
+	auth    = controller.SysAuth{}
+	conf    = controller.SysConf{}
+	dict    = controller.SysDict{}
+	slog    = controller.SysLog{}
+	notice  = controller.SysNotice{}
+	role    = controller.SysRole{}
+	user    = controller.SysUser{}
+	monitor = controller.SysMonitor{}
 )
 
-// 注册路由
+// RegisterSystemRouter 注册路由
 func RegisterSystemRouter(r *gin.Engine) {
 	commonRouter(r)
 	systemRouter(r)

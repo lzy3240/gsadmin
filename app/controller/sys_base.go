@@ -8,14 +8,15 @@ import (
 	"gsadmin/app/service"
 	"gsadmin/app/service/dto"
 	"gsadmin/core/baseapi"
+	"gsadmin/core/baseapi/response"
 	"gsadmin/core/config"
 	"gsadmin/core/store"
-	"gsadmin/core/utils/assertion"
-	"gsadmin/core/utils/captcha"
-	f "gsadmin/core/utils/file"
-	"gsadmin/core/utils/ip"
-	"gsadmin/core/utils/str"
 	"gsadmin/global/e"
+	"gsadmin/utils/assertion"
+	"gsadmin/utils/captcha"
+	f "gsadmin/utils/file"
+	"gsadmin/utils/ip"
+	"gsadmin/utils/str"
 	"html/template"
 	"io/ioutil"
 	"os"
@@ -33,8 +34,6 @@ type SysBase struct {
 //-----------------------------前台----------------------------
 
 func (a SysBase) Welcome(c *gin.Context) {
-	a.MountCtx(c)
-
 	//获取ip
 	cip := ip.GetClientIp(c.Request)
 	//获取归属地
@@ -43,55 +42,49 @@ func (a SysBase) Welcome(c *gin.Context) {
 	svice := service.SysConf{}
 	site, err := svice.GetSiteConf()
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "获取系统配置失败", err).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().SetData(gin.H{
-		"site":  site,
-		"local": gin.H{"ip": cip, "addr": addr},
-	}).WriteJsonExit()
+	a.Success(c, "操作成功").SetData(gin.H{"site": site, "local": gin.H{"ip": cip, "addr": addr}}).WriteJsonExit()
 }
 
 // ----------------system-------------------
 
 // Base 基础样式
 func (a SysBase) Base(c *gin.Context) {
-	a.MountCtx(c)
 	baseConf := service.SysConf{}
 	data, err := baseConf.GetBaseConf()
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "获取基础配置失败", err).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().WriteCustomJsonExit(data)
+	a.Success(c, "操作成功").WriteCustomJsonExit(data)
 }
 
 // Menu 基础菜单
 func (a SysBase) Menu(c *gin.Context) {
-	a.MountCtx(c)
-	user := a.GetUserFromSession()
+	user := a.GetUserFromSession(c)
 	menu := service.SysBase{}
 	menuResp := menu.MenuServiceV2(user)
-	a.SuccessResp().WriteCustomJsonExit(menuResp.MenuResp)
+	a.Success(c, "操作成功").WriteCustomJsonExit(menuResp.MenuResp)
 }
 
 // UploadFile 文件上传页面
 func (a SysBase) UploadFile(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("upload_file.html", nil)
+	a.Success(c, "操作成功").WriteHtmlExit("upload_file.html", nil)
 }
 
 // Upload 文件上传
 func (a SysBase) Upload(c *gin.Context) {
-	a.MountCtx(c)
 	file, err := c.FormFile("file")
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		a.Error(c, "文件上传失败", err).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
 	if file.Size > e.DefUploadSize {
-		a.ErrorResp().SetMsg("文件大小超限").SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		a.Error(c, "文件大小超限", nil).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
 	//处理文件
@@ -99,36 +92,35 @@ func (a SysBase) Upload(c *gin.Context) {
 	savePath := filepath.Join(config.Instance().App.FileSavePath, day) // 按年月日归档保存
 	err = f.IsNotExistMkDir(savePath)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		a.Error(c, "文件路径失败", err).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
 	//保存文件, 多种存储方式
 	//先保存到本地
 	saveName := filepath.Join(savePath, file.Filename)
 	if err = c.SaveUploadedFile(file, saveName); err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		a.Error(c, "文件保存失败", err).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
 
 	//再根据存储配置处理文件
 	backFilePath, err1 := store.Instance().UploadFile(file.Filename, saveName)
 	if err1 != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+		a.Error(c, "文件处理失败", err1).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 		return
 	}
 
-	a.SuccessResp().SetData(backFilePath).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
+	a.Success(c, "操作成功").SetData(backFilePath).SetLogTag(e.OperAdd, e.DefaultUpload).WriteJsonExit()
 }
 
 // IndexPage 主页
 func (a SysBase) IndexPage(c *gin.Context) {
-	a.MountCtx(c)
-	user := a.GetUserFromSession()
+	user := a.GetUserFromSession(c)
 
 	sysConf := service.SysConf{}
 	site, _ := sysConf.GetSiteConf()
 
-	a.SuccessResp().WriteHtmlExit("index.html", gin.H{
+	a.Success(c, "操作成功").WriteHtmlExit("index.html", gin.H{
 		"site":      site,
 		"user":      user,
 		"copyright": template.HTML(site.Copyright), // 防止转义
@@ -137,64 +129,61 @@ func (a SysBase) IndexPage(c *gin.Context) {
 
 // MainPage 引用主页
 func (a SysBase) MainPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("main.html", gin.H{})
+	a.Success(c, "操作成功").WriteHtmlExit("main.html", gin.H{})
 }
 
 // ----------------common-------------------
 
 func (a SysBase) ServerErrPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("server_err.html", nil)
+	a.Success(c, "服务器错误").WriteHtmlExit("server_err.html", nil)
 }
 
 func (a SysBase) IconShow(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("icon.html", nil)
+	a.Success(c, "操作成功").WriteHtmlExit("icon.html", nil)
 }
 
 func (a SysBase) ShowFile(c *gin.Context) {
-	a.MountCtx(c)
 	fp := c.Query("filePath")
 	fi, err := os.Open(fp)
 	if err != nil {
-		a.ErrorResp().WriteRedirect("/not_found")
+		a.Error(c, "文件不存在", err).WriteRedirect("/not_found")
 		return
 	}
 	b, err := ioutil.ReadAll(fi)
 	if err != nil {
-		a.ErrorResp().WriteRedirect("/not_found")
+		a.Error(c, "文件读取失败", err).WriteRedirect("/not_found")
 		return
 	}
-	a.SuccessResp().WriteStringExit("%s", string(b))
+	a.Success(c, "操作成功").WriteStringExit("%s", string(b))
 }
 
 func (a SysBase) GetCaptcha(c *gin.Context) {
-	a.MountCtx(c)
 	id, b64s, err := captcha.CaptMake()
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "验证码生成失败", err).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetData(baseapi.CaptchaResponse{CaptchaId: id, PicPath: b64s}).WriteJsonExit()
+	a.Success(c, "操作成功").SetData(response.CaptchaResponse{CaptchaId: id, PicPath: b64s}).WriteJsonExit()
 }
 
 func (a SysBase) CaptchaVerify(c *gin.Context) {
-	a.MountCtx(c)
 	req := dto.CaptchaVerifyForm{}
-	err := a.Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg("请填写完整信息").WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 		return
 	}
 
 	if captcha.CaptVerify(req.ID, strings.ToLower(req.Capt)) == true {
-		a.SuccessResp().WriteJsonExit()
+		a.Success(c, "验证码正确").WriteJsonExit()
 	} else {
-		a.ErrorResp().SetMsg("验证码有误，请重新输入").WriteJsonExit()
+		a.Error(c, "验证码有误", nil).WriteJsonExit()
 	}
 	return
 }
 
 func (a SysBase) LoginPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("login.html", gin.H{})
+	a.Success(c, "操作成功").WriteHtmlExit("login.html", gin.H{})
 }
 
 func (a SysBase) LoginHandler(c *gin.Context) {
@@ -208,15 +197,15 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 	userService := service.SysUser{}
 
 	var req dto.LoginForm
-	err := a.MountCtx(c).Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).WriteJsonExit()
 		return
 	}
 
 	isLock := base.CheckLock(req.UserName)
 	if isLock {
-		a.ErrorResp().SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+		a.Error(c, "账户已锁定", nil).SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 		return
 	}
 	userAgent := c.Request.Header.Get("User-Agent")
@@ -242,26 +231,26 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 		//写入登录日志
 		err = loginLog.InsertSysLoginLog(info)
 		if err != nil {
-			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "登录日志写入失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 		if having > 0 {
-			a.ErrorResp().SetMsg("账号或密码不正确,还有"+assertion.AnyToString(having)+"次之后账号将锁定").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "密码错误", nil).SetMsg("账号或密码不正确,还有"+assertion.AnyToString(having)+"次之后账号将锁定").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		} else {
-			a.ErrorResp().SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "账户已锁定", nil).SetMsg("密码错误次数超限，账号已锁定,请稍后再试").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 	} else {
-		userID, err := a.SetUserToSession(user)
+		userID, err := a.SetUserToSession(c, user)
 		if err != nil {
-			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "用户信息处理失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 		var online model.SysUserOnline
 		err = str.CopyFields(&online, info)
 		if err != nil {
-			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "用户信息处理失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
 		online.SessionID = userID
@@ -279,28 +268,27 @@ func (a SysBase) LoginHandler(c *gin.Context) {
 		//写入登录日志
 		err = loginLog.InsertSysLoginLog(info)
 		if err != nil {
-			a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+			a.Error(c, "用户登录日志失败", err).SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 			return
 		}
-		a.SuccessResp().SetMsg("登陆成功").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
+		a.Success(c, "操作成功").SetMsg("登陆成功").SetLogTag(e.OperOther, e.UserLogin).WriteJsonExit()
 	}
 }
 
 func (a SysBase) Logout(c *gin.Context) {
 	userService := service.SysUser{}
-	a.MountCtx(c)
-	uid := a.GetUidFromSession() //确定已登录
+	uid := a.GetUidFromSession(c) //确定已登录
 	if uid != 0 {
 		//删除online表
-		operUser := a.GetUserFromSession()
+		operUser := a.GetUserFromSession(c)
 		_ = userService.SignOut(operUser)
 
 		//删除session
-		_ = a.DelUserFromSession(*operUser)
+		_ = a.DelUserFromSession(c, *operUser)
 	}
-	a.SuccessResp().WriteRedirect("/login")
+	a.Success(c, "操作成功").WriteRedirect("/login")
 }
 
 func (a SysBase) NotFoundPage(c *gin.Context) {
-	a.MountCtx(c).SuccessResp().WriteHtmlExit("not_found.html", gin.H{})
+	a.Success(c, "操作成功").WriteHtmlExit("not_found.html", gin.H{})
 }

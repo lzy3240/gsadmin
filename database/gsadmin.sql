@@ -84,10 +84,6 @@ INSERT INTO `sys_auth` VALUES ('52', '消息确认', '/system/notice/status', '0
 INSERT INTO `sys_auth` VALUES ('53', '消息列表接口', '/system/notice/json', '0', '51', '2', 'layui-icon ', '1', '1', '2', '1', '0', '0', '2024-10-23 11:57:51', '2024-10-23 11:57:51');
 INSERT INTO `sys_auth` VALUES ('54', '未读消息接口', '/system/notice', '0', '51', '4', 'layui-icon ', '1', '1', '2', '1', '0', '1', '2024-10-23 11:57:51', '2024-10-29 21:22:54');
 INSERT INTO `sys_auth` VALUES ('55', '消息查看', '/system/notice/edit', '0', '51', '1', 'layui-icon ', '1', '1', '2', '0', '1', '1', '2024-10-29 21:22:23', '2024-10-29 21:22:23');
-INSERT INTO `sys_auth` VALUES ('112', '文章管理', '/', '0', '0', '3', 'layui-icon layui-icon-tabs', '1', '1', '0', '0', '1', '1', '2025-03-13 10:35:37', '2025-03-13 10:36:11');
-INSERT INTO `sys_auth` VALUES ('113', '书籍管理', '/', '0', '0', '4', 'layui-icon layui-icon-read', '1', '1', '0', '0', '1', '1', '2025-03-13 10:36:45', '2025-03-13 10:36:45');
-INSERT INTO `sys_auth` VALUES ('114', '文章列表', '/cms/article/list', '0', '112', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:37:30', '2025-03-13 10:37:30');
-INSERT INTO `sys_auth` VALUES ('115', '书籍列表', '/cms/book/list', '0', '113', '1', 'layui-icon ', '1', '1', '1', '0', '1', '1', '2025-03-13 10:38:02', '2025-03-13 10:38:02');
 
 -- ----------------------------
 -- Table structure for sys_conf
@@ -169,8 +165,6 @@ INSERT INTO `sys_dict_data` VALUES ('31', 'sys_notice_read', '未读', '0', '2',
 INSERT INTO `sys_dict_data` VALUES ('32', 'sys_audit_status', '待审核11', '0', '1', '1', '待审核', '0', '0', '1', '2024-11-04 10:09:54', '2024-11-04 16:22:53');
 INSERT INTO `sys_dict_data` VALUES ('33', 'sys_audit_status', '通过', '1', '2', '1', '审核通过', '0', '0', '0', '2024-11-04 10:11:16', null);
 INSERT INTO `sys_dict_data` VALUES ('34', 'sys_audit_status', '不通过', '2', '3', '1', '审核不通过', '0', '0', '0', '2024-11-04 10:17:07', null);
-INSERT INTO `sys_dict_data` VALUES ('35', 'cms_show_status', '隐藏', '0', '0', '1', '主页隐藏', '0', '1', '1', '2025-03-26 09:29:31', '2025-03-26 09:29:31');
-INSERT INTO `sys_dict_data` VALUES ('36', 'cms_show_status', '展示', '1', '1', '1', '主页展示', '0', '1', '1', '2025-03-26 09:29:44', '2025-03-26 09:29:44');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -205,7 +199,6 @@ INSERT INTO `sys_dict_type` VALUES ('9', 'sys_oper_type', '操作类型', '1', '
 INSERT INTO `sys_dict_type` VALUES ('10', 'sys_common_status', '系统状态', '1', '登录状态列表', '1', '0', '0', '2023-05-08 15:56:38', null);
 INSERT INTO `sys_dict_type` VALUES ('11', 'sys_audit_status', '审核状态', '1', '审核状态列表', '1', '0', '1', '2023-03-23 09:46:42', null);
 INSERT INTO `sys_dict_type` VALUES ('12', 'sys_notice_read', '通知已读', '1', '通知已读列表', '1', '0', '0', '2023-03-23 09:46:42', null);
-INSERT INTO `sys_dict_type` VALUES ('13', 'cms_show_status', '公开状态', '1', '主页是否公开状态', '0', '1', '1', '2025-03-26 09:21:12', '2025-03-26 09:30:55');
 
 -- ----------------------------
 -- Table structure for sys_login_log

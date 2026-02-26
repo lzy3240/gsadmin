@@ -11,9 +11,8 @@ type SysMonitor struct {
 }
 
 func (a SysMonitor) Server(c *gin.Context) {
-	a.MountCtx(c)
 	svice := service.SysMonitor{}
-	data, _ := svice.Server()
+	data, _ := svice.GetServerInfo()
 
-	a.SuccessResp().WriteHtmlExit("server_info.html", gin.H{"server_info": data})
+	a.Success(c, "操作成功").WriteHtmlExit("server_info.html", gin.H{"server_info": data})
 }

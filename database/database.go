@@ -4,7 +4,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/qustavo/dotsql"
 	"gsadmin/app/model"
-	"gsadmin/core/config"
 	"gsadmin/core/db"
 	"gsadmin/core/log"
 )
@@ -28,15 +27,10 @@ func InitTables() {
 func checkTableData(tb interface{}) {
 	DB := db.Instance()
 	if DB.HasTable(tb) == false {
-		if config.Instance().DB.DBType == "sqlite" {
-			if err := DB.Debug().CreateTable(tb).Error; err != nil {
-				log.Instance().Fatal("创建数据表失败: " + err.Error())
-			}
-		} else {
-			if err := DB.Debug().Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(tb).Error; err != nil {
-				log.Instance().Fatal("创建数据表失败: " + err.Error())
-			}
+		if err := DB.Debug().Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(tb).Error; err != nil {
+			log.Instance().Fatal("创建数据表失败: " + err.Error())
 		}
+
 		var sqlName string
 		if _, ok := tb.(*model.SysUser); ok {
 			sqlName = "create-sys-user"
@@ -59,14 +53,8 @@ func checkTableData(tb interface{}) {
 		}
 	} else {
 		// 已存在的表校验一下是否有新增字段
-		if config.Instance().DB.DBType == "sqlite" {
-			if err := DB.Debug().AutoMigrate(tb).Error; err != nil {
-				log.Instance().Fatal("数据库初始化失败: " + err.Error())
-			}
-		} else {
-			if err := DB.Debug().Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").AutoMigrate(tb).Error; err != nil {
-				log.Instance().Fatal("数据库初始化失败: " + err.Error())
-			}
+		if err := DB.Debug().Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").AutoMigrate(tb).Error; err != nil {
+			log.Instance().Fatal("数据库初始化失败: " + err.Error())
 		}
 	}
 }

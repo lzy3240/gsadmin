@@ -16,32 +16,30 @@ type SysConf struct {
 // ----------------------------后台-----------------------------
 
 func (a SysConf) SiteEditPage(c *gin.Context) {
-	a.MountCtx(c)
 	svice := service.SysConf{}
 	site, err := svice.GetSiteConf()
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
+		a.Error(c, "获取系统配置失败", err).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperEdit, e.SiteEdit).WriteHtmlExit("site_config.html", gin.H{"site": site})
+	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteHtmlExit("site_config.html", gin.H{"site": site})
 }
 
 func (a SysConf) SiteEdit(c *gin.Context) {
-	a.MountCtx(c)
 	svice := service.SysConf{}
 
 	var req dto.SiteConfForm
-	err := a.Bind(&req, binding.Form)
+	err := a.Bind(c, &req, binding.Form)
 	if err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
+		a.Error(c, "参数校验失败", err).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 		return
 	}
 
 	if err = svice.EditSiteConf(&req); err != nil {
-		a.ErrorResp().SetMsg(a.TransErr(err)).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
+		a.Error(c, "修改系统配置失败", err).SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 		return
 	}
-	a.SuccessResp().SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
+	a.Success(c, "操作成功").SetLogTag(e.OperEdit, e.SiteEdit).WriteJsonExit()
 }
 
 func (a SysConf) BaseEditPage(c *gin.Context) {

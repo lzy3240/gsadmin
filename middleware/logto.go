@@ -7,15 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"gsadmin/app/model"
-	"gsadmin/core/baseapi"
+	"gsadmin/core/baseapi/response"
 	"gsadmin/core/config"
 	"gsadmin/core/db"
 	"gsadmin/core/log"
 	"gsadmin/core/queue"
-	"gsadmin/core/utils/assertion"
-	"gsadmin/core/utils/ip"
-	"gsadmin/core/utils/session"
 	"gsadmin/global/e"
+	"gsadmin/utils/assertion"
+	"gsadmin/utils/ip"
+	"gsadmin/utils/session"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -64,7 +64,7 @@ func LogTo() func(c *gin.Context) {
 
 		// 处理返回结果
 		outBody, _ := c.Get("result")
-		respBody := outBody.(*baseapi.CommonResp)
+		respBody := outBody.(*response.CommonResp)
 
 		// Tag为false不记录
 		if respBody.Tag == false {
@@ -157,5 +157,5 @@ func logToDB(operLog model.SysOperLog) {
 
 // 操作日志入文件
 func logToFile(operLog model.SysOperLog) {
-	log.Instance().Info("OperLog SuccessResp...", zap.Any("operLog", operLog))
+	log.Instance().Info("OperLog Success...", zap.Any("operLog", operLog))
 }

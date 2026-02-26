@@ -14,7 +14,6 @@ FileViewPath = "runtime/upload"
 
 # db配置 以下 两者任选其一 不要同时使用
 [db]
-DBType = "mysql" # "sqlite" 或 "mysql"
 DBName = "gsadmin"
 DBUser = "root"
 DBPwd = "Aa111111"

@@ -7,12 +7,14 @@ import (
 	"gsadmin/core/baseservice"
 	"gsadmin/core/db"
 	"gsadmin/core/log"
-	"gsadmin/core/utils/assertion"
+	"gsadmin/utils/assertion"
 )
 
 type SysDict struct {
 	baseservice.Service
 }
+
+// -------dict type operation---------
 
 // 获取字典类型列表
 func (s *SysDict) DictTypeListJson(req *dto.DictTypeListForm) (list []model.SysDictType, count int, err error) {

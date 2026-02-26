@@ -5,7 +5,7 @@ import (
 	"gsadmin/core/baseservice"
 	"gsadmin/core/db"
 	"gsadmin/core/log"
-	"gsadmin/core/utils/assertion"
+	"gsadmin/utils/assertion"
 	"strings"
 )
 

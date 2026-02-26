@@ -11,9 +11,9 @@ import (
 	"gsadmin/core/cache"
 	"gsadmin/core/config"
 	"gsadmin/core/log"
-	"gsadmin/core/utils/assertion"
-	"gsadmin/core/utils/str"
 	"gsadmin/global/e"
+	"gsadmin/utils/assertion"
+	"gsadmin/utils/str"
 	"os"
 	"runtime"
 	"time"
@@ -23,7 +23,7 @@ type SysMonitor struct {
 	baseservice.Service
 }
 
-func (s *SysMonitor) Server() (model.ServerInfo, error) {
+func (s *SysMonitor) GetServerInfo() (model.ServerInfo, error) {
 	res, err := cache.Instance().Get(e.SysBase, e.ServerMonitor)
 	if err == nil {
 		var serverInfo model.ServerInfo
