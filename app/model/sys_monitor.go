@@ -1,7 +1,6 @@
 package model
 
-// 系统监控信息不入库
-// ServerInfo
+// ServerInfo 监控信息不入库
 type ServerInfo struct {
 	CpuInfo  CpuInfo    `json:"cpuInfo"`
 	MemInfo  MemInfo    `json:"memInfo"`
