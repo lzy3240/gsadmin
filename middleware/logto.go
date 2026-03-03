@@ -17,7 +17,6 @@ import (
 	"gsadmin/utils/ip"
 	"gsadmin/utils/session"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
@@ -40,8 +39,8 @@ func LogTo() func(c *gin.Context) {
 				log.Instance().Error("copy request body Failed." + err.Error())
 				err = nil
 			}
-			rb, _ := ioutil.ReadAll(bf)
-			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(rb))
+			rb, _ := io.ReadAll(bf)
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(rb))
 			param = string(rb)
 			//中文参数处理
 			text, err1 := url.QueryUnescape(param)
